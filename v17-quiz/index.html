@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Vibe Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+
+    .back { position: fixed; top: 20px; left: 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+    .back:hover { background: rgba(255,255,255,0.25); color: #fff; }
+
+    .quiz-wrap { width: 100%; max-width: 560px; }
+    .quiz-title { text-align: center; color: #fff; margin-bottom: 32px; }
+    .quiz-title h1 { font-size: 1.8rem; font-weight: 800; }
+    .quiz-title p { font-size: 0.9rem; opacity: 0.8; margin-top: 6px; }
+
+    /* All radio inputs hidden */
+    input[type="radio"] { display: none; }
+
+    /* Question cards */
+    .q { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); display: none; }
+
+    /* Show q1 by default */
+    .q1 { display: block; }
+
+    .q-num { font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+    .q h2 { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; line-height: 1.3; }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .options label { display: block; padding: 14px 16px; border: 2px solid #e8e8e8; border-radius: 12px; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: #333; transition: all 0.15s; text-align: center; }
+    .options label:hover { border-color: #764ba2; color: #764ba2; background: #f8f4ff; }
+    .options label .emoji { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+
+    /* Q2 shows when a q1 answer is checked */
+    #q1a:checked ~ .quiz-wrap .q1,
+    #q1b:checked ~ .quiz-wrap .q1,
+    #q1c:checked ~ .quiz-wrap .q1 { display: none; }
+    #q1a:checked ~ .quiz-wrap .q2,
+    #q1b:checked ~ .quiz-wrap .q2,
+    #q1c:checked ~ .quiz-wrap .q2 { display: block; }
+
+    /* Q3 shows when q2 is answered */
+    #q2a:checked ~ .quiz-wrap .q2,
+    #q2b:checked ~ .quiz-wrap .q2 { display: none; }
+    #q2a:checked ~ .quiz-wrap .q3,
+    #q2b:checked ~ .quiz-wrap .q3 { display: block; }
+
+    /* Q4 shows when q3 is answered */
+    #q3a:checked ~ .quiz-wrap .q3,
+    #q3b:checked ~ .quiz-wrap .q3 { display: none; }
+    #q3a:checked ~ .quiz-wrap .q4,
+    #q3b:checked ~ .quiz-wrap .q4 { display: block; }
+
+    /* Results show when q4 is answered — hide q4 */
+    #q4a:checked ~ .quiz-wrap .q4,
+    #q4b:checked ~ .quiz-wrap .q4 { display: none; }
+
+    /* Result cards — all hidden by default */
+    .result { display: none; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+    .result-img { width: 100%; height: 200px; object-fit: cover; }
+    .result-body { padding: 24px; }
+    .result-label { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 6px; }
+    .result h2 { font-size: 1.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; }
+    .result .country { font-size: 0.8rem; color: #888; margin-bottom: 12px; }
+    .result .tagline { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 14px; }
+    .result .pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .result .pill { padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+    .pill-price { background: #fff3cd; color: #856404; }
+    .pill-flight { background: #d1ecf1; color: #0c5460; }
+    .pill-tag { background: #f8f4ff; color: #764ba2; }
+    .result .acts { font-size: 0.82rem; color: #666; }
+    .result .acts li { padding: 3px 0; }
+    .retry { display: block; text-align: center; margin-top: 16px; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+
+    /*
+      Result logic using CSS selectors.
+      We have 4 questions, each with 2 options (except q1 has 3).
+      We map combinations to destinations:
+
+      q1: a=budget($), b=mid($$), c=splurge($$$)
+      q2: a=beach, b=city
+      q3: a=domestic, b=international
+      q4: a=chill, b=party
+
+      Mappings:
+      budget + beach + domestic → Miami (cheap, beach, domestic)
+      budget + city + domestic  → New Orleans (cheap, city, domestic)
+      budget + beach + intl     → Cancun (cheap, beach, international)
+      budget + city + intl      → Cancun (fallback)
+      mid + beach + domestic    → Miami
+      mid + beach + intl + party → Cancun
+      mid + beach + intl + chill → Punta Cana
+      mid + city + domestic     → New Orleans
+      mid + city + intl         → Barcelona
+      splurge + any + intl      → Barcelona
+      splurge + beach + domestic → Miami
+      splurge + city + domestic  → New Orleans
+      any + beach + intl + chill → Punta Cana
+      mid + beach + chill        → Cabo
+
+      Simplified to 6 main outcomes —
+      We'll use the most common combos and assign remaining to defaults.
+    */
+
+    /* CANCUN: budget/mid + beach + intl + party */
+    #q1a:checked ~ #q2a:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-cancun,
+    #q1b:checked ~ #q2a:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-cancun { display: block; }
+
+    /* MIAMI: any + beach + domestic */
+    #q1a:checked ~ #q2a:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-miami,
+    #q1a:checked ~ #q2a:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-miami,
+    #q1b:checked ~ #q2a:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-miami,
+    #q1b:checked ~ #q2a:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-miami,
+    #q1c:checked ~ #q2a:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-miami,
+    #q1c:checked ~ #q2a:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-miami { display: block; }
+
+    /* BARCELONA: mid/splurge + city + intl */
+    #q1b:checked ~ #q2b:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-barcelona,
+    #q1b:checked ~ #q2b:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-barcelona,
+    #q1c:checked ~ #q2b:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-barcelona,
+    #q1c:checked ~ #q2b:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-barcelona,
+    #q1c:checked ~ #q2a:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-barcelona,
+    #q1c:checked ~ #q2a:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-barcelona { display: block; }
+
+    /* CABO: mid + beach + intl + chill */
+    #q1b:checked ~ #q2a:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-cabo { display: block; }
+
+    /* NEW ORLEANS: any + city + domestic */
+    #q1a:checked ~ #q2b:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-nola,
+    #q1a:checked ~ #q2b:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-nola,
+    #q1b:checked ~ #q2b:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-nola,
+    #q1b:checked ~ #q2b:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-nola,
+    #q1c:checked ~ #q2b:checked ~ #q3a:checked ~ #q4a:checked ~ .quiz-wrap .result-nola,
+    #q1c:checked ~ #q2b:checked ~ #q3a:checked ~ #q4b:checked ~ .quiz-wrap .result-nola { display: block; }
+
+    /* PUNTA CANA: budget + beach + intl + chill */
+    #q1a:checked ~ #q2a:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-punta,
+    #q1a:checked ~ #q2b:checked ~ #q3b:checked ~ #q4a:checked ~ .quiz-wrap .result-punta,
+    #q1a:checked ~ #q2b:checked ~ #q3b:checked ~ #q4b:checked ~ .quiz-wrap .result-punta { display: block; }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back">← All Versions</a>
+
+  <!-- All radio inputs must be siblings of the quiz-wrap for CSS sibling selectors to work -->
+  <input type="radio" name="q1" id="q1a">
+  <input type="radio" name="q1" id="q1b">
+  <input type="radio" name="q1" id="q1c">
+  <input type="radio" name="q2" id="q2a">
+  <input type="radio" name="q2" id="q2b">
+  <input type="radio" name="q3" id="q3a">
+  <input type="radio" name="q3" id="q3b">
+  <input type="radio" name="q4" id="q4a">
+  <input type="radio" name="q4" id="q4b">
+
+  <div class="quiz-wrap">
+    <div class="quiz-title">
+      <h1>Find Your Senior Trip</h1>
+      <p>4 questions to your perfect destination</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q q1">
+      <div class="q-num">Question 1 of 4</div>
+      <h2>What's your budget vibe?</h2>
+      <div class="options">
+        <label for="q1a"><span class="emoji">💵</span>Budget — keep it cheap</label>
+        <label for="q1b"><span class="emoji">💳</span>Mid-range — treat yourself</label>
+        <label for="q1c"><span class="emoji">💎</span>Splurge — it's graduation</label>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q q2">
+      <div class="q-num">Question 2 of 4</div>
+      <h2>Beach or city?</h2>
+      <div class="options">
+        <label for="q2a"><span class="emoji">🏖</span>Beach — sand & sun all day</label>
+        <label for="q2b"><span class="emoji">🏙</span>City — culture & food & streets</label>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q q3">
+      <div class="q-num">Question 3 of 4</div>
+      <h2>How far are you willing to go?</h2>
+      <div class="options">
+        <label for="q3a"><span class="emoji">🇺🇸</span>Keep it domestic — no passport</label>
+        <label for="q3b"><span class="emoji">🌍</span>International — I want a stamp</label>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q q4">
+      <div class="q-num">Question 4 of 4</div>
+      <h2>What's the vibe?</h2>
+      <div class="options">
+        <label for="q4a"><span class="emoji">😌</span>Chill — relax & recharge</label>
+        <label for="q4b"><span class="emoji">🎉</span>Party — go out every night</label>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="result result-cancun">
+      <img src="../images/cancun.jpg" alt="Cancun" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>Cancun</h2>
+        <div class="country">Mexico · Caribbean Coast</div>
+        <p class="tagline">You want sun, sand, and the wildest parties in Mexico — Cancun delivers every time.</p>
+        <div class="pills"><span class="pill pill-price">💰 $900–$1,400</span><span class="pill pill-flight">✈️ 3hr · No visa</span><span class="pill pill-tag">Beach</span><span class="pill pill-tag">Nightlife</span></div>
+        <ul class="acts"><li>🌊 Cenotes swim</li><li>🏛 Chichen Itza</li><li>🤿 Reef snorkeling</li><li>🌅 Tulum ruins</li><li>🎉 Hotel Zone nightlife</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+    <div class="result result-miami">
+      <img src="../images/miami.jpg" alt="Miami" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>Miami</h2>
+        <div class="country">Florida, USA · Domestic</div>
+        <p class="tagline">No passport, all the energy. South Beach, Wynwood, and Ocean Drive are calling your name.</p>
+        <div class="pills"><span class="pill pill-price">💰 $600–$1,000</span><span class="pill pill-flight">✈️ 2.5hr · Domestic</span><span class="pill pill-tag">Beach</span><span class="pill pill-tag">Nightlife</span></div>
+        <ul class="acts"><li>🏖 South Beach</li><li>🎨 Wynwood Walls</li><li>🌿 Everglades</li><li>🥘 Little Havana</li><li>🎶 Ocean Drive</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+    <div class="result result-barcelona">
+      <img src="../images/barcelona.jpg" alt="Barcelona" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>Barcelona</h2>
+        <div class="country">Spain · Europe</div>
+        <p class="tagline">You want it all — art, architecture, food, and clubs that go until sunrise. Europe's best city.</p>
+        <div class="pills"><span class="pill pill-price">💰 $1,800–$2,500</span><span class="pill pill-flight">✈️ 10hr · No visa</span><span class="pill pill-tag">Culture</span><span class="pill pill-tag">Nightlife</span></div>
+        <ul class="acts"><li>⛪ Sagrada Família</li><li>🏘 Gothic Quarter</li><li>🏖 Barceloneta</li><li>🛍 La Boqueria</li><li>🕺 Port Olímpic clubs</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+    <div class="result result-cabo">
+      <img src="../images/cabo.jpg" alt="Cabo" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>Cabo San Lucas</h2>
+        <div class="country">Mexico · Baja Peninsula</div>
+        <p class="tagline">International with a resort vibe — El Arco, desert ATVs, dolphin cruises, and beautiful beaches.</p>
+        <div class="pills"><span class="pill pill-price">💰 $1,000–$1,600</span><span class="pill pill-flight">✈️ 3.5hr · No visa</span><span class="pill pill-tag">Beach</span><span class="pill pill-tag">Resort</span></div>
+        <ul class="acts"><li>🏔 El Arco boat tour</li><li>🏖 Medano Beach</li><li>🏍 Desert ATV</li><li>🐬 Dolphin cruise</li><li>🎉 Cabo Wabo</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+    <div class="result result-nola">
+      <img src="../images/new-orleans.jpg" alt="New Orleans" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>New Orleans</h2>
+        <div class="country">Louisiana, USA · Domestic</div>
+        <p class="tagline">You're a city person with taste. Jazz, beignets, bayou tours, and Bourbon Street — America's most soulful city.</p>
+        <div class="pills"><span class="pill pill-price">💰 $500–$900</span><span class="pill pill-flight">✈️ 2hr · Domestic</span><span class="pill pill-tag">Food</span><span class="pill pill-tag">Culture</span></div>
+        <ul class="acts"><li>🎺 Frenchmen St jazz</li><li>🍩 Café Du Monde</li><li>🐊 Bayou tour</li><li>🏘 Garden District</li><li>🎉 Bourbon Street</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+    <div class="result result-punta">
+      <img src="../images/punta-cana.jpg" alt="Punta Cana" class="result-img">
+      <div class="result-body">
+        <div class="result-label">Your destination is</div>
+        <h2>Punta Cana</h2>
+        <div class="country">Dominican Republic · Caribbean</div>
+        <p class="tagline">All-inclusive, stress-free paradise. You've earned it. Saona Island, snorkeling, horseback on the beach.</p>
+        <div class="pills"><span class="pill pill-price">💰 $1,000–$1,500</span><span class="pill pill-flight">✈️ 5hr · Passport req.</span><span class="pill pill-tag">Resort</span><span class="pill pill-tag">Beach</span></div>
+        <ul class="acts"><li>🏖 All-inclusive resort</li><li>⛵ Saona Island</li><li>🤿 Snorkeling</li><li>🪂 Zip-lining</li><li>🐴 Horseback beach</li></ul>
+        <a href="." class="retry">← Retake quiz</a>
+      </div>
+    </div>
+
+  </div><!-- end quiz-wrap -->
+</body>
+</html>

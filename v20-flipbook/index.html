@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Flipbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body { font-family: 'Inter', sans-serif; background: #000; }
+
+    .back { position: fixed; top: 20px; left: 24px; z-index: 200; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.78rem; background: rgba(0,0,0,0.4); padding: 6px 14px; border-radius: 20px; backdrop-filter: blur(6px); }
+    .back:hover { color: #fff; background: rgba(0,0,0,0.7); }
+
+    /* Page counter */
+    .counter { position: fixed; top: 20px; right: 24px; z-index: 200; color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 2px; background: rgba(0,0,0,0.4); padding: 6px 14px; border-radius: 20px; backdrop-filter: blur(6px); }
+
+    /* Horizontal scroll container */
+    .flipbook { display: flex; width: 100vw; height: 100vh; overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .flipbook::-webkit-scrollbar { display: none; }
+
+    /* Each page */
+    .page { flex-shrink: 0; width: 100vw; height: 100vh; scroll-snap-align: start; position: relative; overflow: hidden; }
+
+    .page .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    .page .overlay { position: absolute; inset: 0; }
+
+    /* Unique overlays per page */
+    .p1 .overlay { background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+    .p2 .overlay { background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+    .p3 .overlay { background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+    .p4 .overlay { background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+    .p5 .overlay { background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+    .p6 .overlay { background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+
+    .page-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
+
+    /* Alternate left/right alignment */
+    .p1 .page-content, .p3 .page-content, .p5 .page-content { padding: 60px 60px 60px 60px; align-items: flex-start; }
+    .p2 .page-content, .p4 .page-content, .p6 .page-content { padding: 60px 60px 60px auto; align-items: flex-end; text-align: right; }
+    .p2 .page-content, .p4 .page-content, .p6 .page-content { justify-content: center; padding: 60px; }
+
+    .page-num { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .dest-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 700; color: #fff; line-height: 0.9; margin-bottom: 12px; text-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+    .dest-country { font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+
+    .bottom-strip { display: flex; gap: 20px; flex-wrap: wrap; }
+    .p2 .bottom-strip, .p4 .bottom-strip, .p6 .bottom-strip { justify-content: flex-end; }
+    .strip-item { }
+    .strip-item .s-label { font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 3px; }
+    .strip-item .s-val { font-size: 0.85rem; font-weight: 500; color: #fff; }
+
+    .divider-line { width: 40px; height: 1px; background: rgba(255,255,255,0.3); margin: 20px 0; }
+    .p2 .divider-line, .p4 .divider-line, .p6 .divider-line { margin: 20px 0 20px auto; }
+
+    .activities { display: flex; gap: 10px; flex-wrap: wrap; }
+    .p2 .activities, .p4 .activities, .p6 .activities { justify-content: flex-end; }
+    .act-pill { font-size: 0.72rem; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px); }
+
+    /* Scroll hint arrows */
+    .hint-right { position: absolute; right: 24px; bottom: 50%; transform: translateY(50%); color: rgba(255,255,255,0.3); font-size: 2rem; animation: pulse 2s infinite; }
+    .hint-left  { position: absolute; left: 24px; bottom: 50%; transform: translateY(50%); color: rgba(255,255,255,0.3); font-size: 2rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+
+    /* Dot nav */
+    .dots { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; gap: 8px; }
+    .dots .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+
+    @media (max-width: 600px) {
+      .p1 .page-content, .p2 .page-content, .p3 .page-content,
+      .p4 .page-content, .p5 .page-content, .p6 .page-content {
+        padding: 80px 24px 80px; align-items: flex-start; text-align: left;
+      }
+      .p2 .bottom-strip, .p4 .bottom-strip, .p6 .bottom-strip { justify-content: flex-start; }
+      .p2 .activities, .p4 .activities, .p6 .activities { justify-content: flex-start; }
+      .p2 .divider-line, .p4 .divider-line, .p6 .divider-line { margin: 20px 0; }
+      .dest-name { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back">← All Versions</a>
+  <div class="counter">Swipe →</div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <div class="flipbook">
+
+    <div class="page p1">
+      <div class="bg" style="background-image:url('../images/cancun.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">01 / 06</div>
+        <div class="dest-name">Cancun</div>
+        <div class="dest-country">Mexico · Caribbean Coast</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$900–$1,400</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">3hr · No visa</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Beach · Nightlife</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">🌊 Cenotes</span>
+          <span class="act-pill">🏛 Chichen Itza</span>
+          <span class="act-pill">🤿 Snorkeling</span>
+          <span class="act-pill">🌅 Tulum</span>
+          <span class="act-pill">🎉 Hotel Zone</span>
+        </div>
+      </div>
+      <div class="hint-right">›</div>
+    </div>
+
+    <div class="page p2">
+      <div class="bg" style="background-image:url('../images/miami.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">02 / 06</div>
+        <div class="dest-name">Miami</div>
+        <div class="dest-country">Florida · USA Domestic</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$600–$1,000</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">2.5hr · No passport</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Beach · Nightlife</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">🏖 South Beach</span>
+          <span class="act-pill">🎨 Wynwood</span>
+          <span class="act-pill">🌿 Everglades</span>
+          <span class="act-pill">🥘 Little Havana</span>
+          <span class="act-pill">🎶 Ocean Drive</span>
+        </div>
+      </div>
+      <div class="hint-left">‹</div>
+      <div class="hint-right">›</div>
+    </div>
+
+    <div class="page p3">
+      <div class="bg" style="background-image:url('../images/barcelona.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">03 / 06</div>
+        <div class="dest-name">Barcelona</div>
+        <div class="dest-country">Catalonia · Spain</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$1,800–$2,500</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">10hr · No visa</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Culture · Nightlife</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">⛪ Sagrada Família</span>
+          <span class="act-pill">🏘 Gothic Quarter</span>
+          <span class="act-pill">🏖 Barceloneta</span>
+          <span class="act-pill">🛍 La Boqueria</span>
+          <span class="act-pill">🕺 Port Olímpic</span>
+        </div>
+      </div>
+      <div class="hint-left">‹</div>
+      <div class="hint-right">›</div>
+    </div>
+
+    <div class="page p4">
+      <div class="bg" style="background-image:url('../images/cabo.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">04 / 06</div>
+        <div class="dest-name">Cabo San Lucas</div>
+        <div class="dest-country">Baja California Sur · Mexico</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$1,000–$1,600</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">3.5hr · No visa</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Beach · Resort</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">🏔 El Arco</span>
+          <span class="act-pill">🏖 Medano Beach</span>
+          <span class="act-pill">🏍 Desert ATV</span>
+          <span class="act-pill">🐬 Dolphins</span>
+          <span class="act-pill">🎉 Cabo Wabo</span>
+        </div>
+      </div>
+      <div class="hint-left">‹</div>
+      <div class="hint-right">›</div>
+    </div>
+
+    <div class="page p5">
+      <div class="bg" style="background-image:url('../images/new-orleans.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">05 / 06</div>
+        <div class="dest-name">New Orleans</div>
+        <div class="dest-country">Louisiana · USA Domestic</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$500–$900</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">2hr · No passport</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Food · Culture · Nightlife</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">🎺 Frenchmen St Jazz</span>
+          <span class="act-pill">🍩 Café Du Monde</span>
+          <span class="act-pill">🐊 Bayou Tour</span>
+          <span class="act-pill">🏘 Garden District</span>
+          <span class="act-pill">🎉 Bourbon St</span>
+        </div>
+      </div>
+      <div class="hint-left">‹</div>
+      <div class="hint-right">›</div>
+    </div>
+
+    <div class="page p6">
+      <div class="bg" style="background-image:url('../images/punta-cana.jpg')"></div>
+      <div class="overlay"></div>
+      <div class="page-content">
+        <div class="page-num">06 / 06</div>
+        <div class="dest-name">Punta Cana</div>
+        <div class="dest-country">Dominican Republic · Caribbean</div>
+        <div class="bottom-strip">
+          <div class="strip-item"><div class="s-label">Price</div><div class="s-val">$1,000–$1,500</div></div>
+          <div class="strip-item"><div class="s-label">Flight</div><div class="s-val">5hr · Passport req.</div></div>
+          <div class="strip-item"><div class="s-label">Vibe</div><div class="s-val">Resort · Beach</div></div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="activities">
+          <span class="act-pill">🏖 All-inclusive</span>
+          <span class="act-pill">⛵ Saona Island</span>
+          <span class="act-pill">🤿 Snorkeling</span>
+          <span class="act-pill">🪂 Zip-lining</span>
+          <span class="act-pill">🐴 Horseback</span>
+        </div>
+      </div>
+      <div class="hint-left">‹</div>
+    </div>
+
+  </div>
+</body>
+</html>

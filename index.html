@@ -92,6 +92,28 @@
     .v9 .name { color: #d4af37; }
     .v9 .num, .v9 .desc { color: #aaa; }
 
+    .section-divider {
+      max-width: 1100px;
+      margin: 40px auto 8px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-divider h2 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #555;
+      white-space: nowrap;
+    }
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #222;
+    }
     footer {
       text-align: center;
       padding: 24px;
@@ -103,9 +125,10 @@
 <body>
   <header>
     <h1>Senior Trip 2026</h1>
-    <p>Six destinations. Ten vibes. One trip. Pick your aesthetic.</p>
+    <p>Six destinations. Twenty ways to explore them. Pick your vibe or layout.</p>
   </header>
 
+  <div class="section-divider"><h2>Pick Your Vibe — Aesthetic Styles</h2></div>
   <div class="grid">
     <a href="v1-tropical/index.html" class="vibe-card v1">
       <div class="card-inner">
@@ -176,6 +199,40 @@
         <div class="name">Y2K / 90s Internet</div>
         <div class="desc">Maximum chaos. Maximum fun. ✨</div>
       </div>
+    </a>
+  </div>
+
+  <div class="section-divider"><h2>Pick Your Layout — Interaction Styles</h2></div>
+  <div class="grid">
+    <a href="v11-map/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1a2744,#2d5a8e);">
+      <div class="card-inner"><div class="num">Version 11</div><div class="name">Interactive Map</div><div class="desc">Hover pins on a world map</div></div>
+    </a>
+    <a href="v12-bento/index.html" class="vibe-card" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e);">
+      <div class="card-inner"><div class="num">Version 12</div><div class="name">Bento Grid</div><div class="desc">Asymmetric mosaic layout</div></div>
+    </a>
+    <a href="v13-timeline/index.html" class="vibe-card" style="background:linear-gradient(135deg,#f5e6c8,#c8a86e);color:#3a2a10;">
+      <div class="card-inner"><div class="num" style="opacity:0.6">Version 13</div><div class="name">Vertical Timeline</div><div class="desc">Destinations as travel stops</div></div>
+    </a>
+    <a href="v14-instagram/index.html" class="vibe-card" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);">
+      <div class="card-inner"><div class="num">Version 14</div><div class="name">Instagram Feed</div><div class="desc">Fake IG posts & stories</div></div>
+    </a>
+    <a href="v15-scroll/index.html" class="vibe-card" style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);">
+      <div class="card-inner"><div class="num">Version 15</div><div class="name">Scrollytelling</div><div class="desc">Full-screen cinematic scroll</div></div>
+    </a>
+    <a href="v16-terminal/index.html" class="vibe-card" style="background:linear-gradient(135deg,#0d1117,#161b22);">
+      <div class="card-inner"><div class="num" style="color:#3fb950">Version 16</div><div class="name" style="color:#58a6ff">Terminal / CLI</div><div class="desc" style="color:#8b949e">Static terminal output view</div></div>
+    </a>
+    <a href="v17-quiz/index.html" class="vibe-card" style="background:linear-gradient(135deg,#667eea,#764ba2);">
+      <div class="card-inner"><div class="num">Version 17</div><div class="name">Vibe Quiz</div><div class="desc">4 questions → your destination</div></div>
+    </a>
+    <a href="v18-accordion/index.html" class="vibe-card" style="background:linear-gradient(135deg,#f4f4f5,#e4e4e7);color:#18181b;">
+      <div class="card-inner"><div class="num" style="opacity:0.5">Version 18</div><div class="name">CSS Accordion</div><div class="desc">Click to expand destinations</div></div>
+    </a>
+    <a href="v19-compare/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6);">
+      <div class="card-inner"><div class="num">Version 19</div><div class="name">Comparison Tool</div><div class="desc">Side-by-side destination picker</div></div>
+    </a>
+    <a href="v20-flipbook/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);">
+      <div class="card-inner"><div class="num">Version 20</div><div class="name">Magazine Flipbook</div><div class="desc">Swipe full-screen pages</div></div>
     </a>
   </div>
 

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>trip-planner — terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'JetBrains Mono', 'Courier New', monospace; background: #0d1117; color: #c9d1d9; min-height: 100vh; font-size: 14px; line-height: 1.6; }
+
+    .window { max-width: 900px; margin: 0 auto; }
+    .titlebar { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+    .titlebar .dots { display: flex; gap: 6px; }
+    .titlebar .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #28c840; }
+    .titlebar .title { font-size: 0.75rem; color: #8b949e; margin: 0 auto; }
+    .back-link { font-size: 0.7rem; color: #58a6ff; text-decoration: none; }
+
+    .terminal { padding: 24px; }
+
+    .prompt { color: #58a6ff; }
+    .prompt .user { color: #3fb950; }
+    .prompt .sep { color: #8b949e; }
+    .prompt .path { color: #d2a8ff; }
+    .cmd { color: #c9d1d9; }
+
+    .output { padding-left: 0; margin: 8px 0 20px; }
+
+    .section-header { color: #f0f6fc; font-weight: 700; border-bottom: 1px solid #21262d; padding-bottom: 4px; margin-bottom: 12px; }
+
+    .dest-block { border: 1px solid #21262d; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+    .dest-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; }
+    .dest-header .dest-id { color: #58a6ff; font-weight: 700; }
+    .dest-header .dest-name { color: #f0f6fc; font-weight: 700; font-size: 1.05rem; }
+    .dest-header .dest-country { color: #8b949e; }
+    .dest-body { padding: 10px 14px; border-top: 1px solid #21262d; background: #0d1117; }
+
+    .field { display: flex; gap: 2px; margin-bottom: 4px; }
+    .field .key { color: #d2a8ff; min-width: 120px; }
+    .field .val { color: #c9d1d9; }
+    .val-cheap { color: #3fb950; }
+    .val-mid { color: #e3b341; }
+    .val-pricey { color: #f85149; }
+    .val-tag { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 3px; padding: 0 6px; color: #79c0ff; font-size: 0.85em; margin-right: 4px; }
+    .val-act { color: #8b949e; }
+    .val-act::before { content: '  · '; color: #3fb950; }
+    .val-act:first-child::before { content: ''; }
+    .activities-list { padding-left: 16px; }
+    .activities-list .act { color: #8b949e; }
+    .activities-list .act::before { content: '→ '; color: #3fb950; }
+
+    .separator { border: none; border-top: 1px solid #21262d; margin: 20px 0; }
+
+    .cursor { display: inline-block; width: 8px; height: 14px; background: #58a6ff; animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .comment { color: #8b949e; font-style: italic; }
+    .success { color: #3fb950; }
+    .warning { color: #e3b341; }
+    .error { color: #f85149; }
+
+    /* Dest header colors */
+    .h-cancun    { background: #1a1e26; border-left: 3px solid #ff6b6b; }
+    .h-miami     { background: #1a1e26; border-left: 3px solid #48dbfb; }
+    .h-barcelona { background: #1a1e26; border-left: 3px solid #ffd200; }
+    .h-cabo      { background: #1a1e26; border-left: 3px solid #ff9f43; }
+    .h-nola      { background: #1a1e26; border-left: 3px solid #a29bfe; }
+    .h-punta     { background: #1a1e26; border-left: 3px solid #55efc4; }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+      <div class="title">trip-planner — bash — 900×600</div>
+      <a href="../index.html" class="back-link">← all versions</a>
+    </div>
+
+    <div class="terminal">
+
+      <div><span class="prompt"><span class="user">student</span><span class="sep">@</span><span class="path">~/senior-trip</span> $</span> <span class="cmd">./trip-planner --list-all --class=2026</span></div>
+      <div class="output">
+        <div class="comment"># Loading destination database...</div>
+        <div class="success">✓ Found 6 destinations matching your criteria</div>
+        <div class="comment"># Origin: Midwest USA · Currency: USD · Visa: US Passport optional</div>
+      </div>
+
+      <hr class="separator">
+      <div class="section-header">DESTINATIONS [6 results]</div>
+
+      <div class="dest-block">
+        <div class="dest-header h-cancun">
+          <div><span class="dest-id">[DEST-001]</span> <span class="dest-name">Cancun</span></div>
+          <div class="dest-country">Mexico · Caribbean Coast</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-mid">$900–$1,400 ($$)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">3hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">beach</span><span class="val-tag">nightlife</span></span></div>
+          <div class="field"><span class="key">activities:</span></div>
+          <div class="activities-list">
+            <div class="act">🌊 Cenotes swim</div>
+            <div class="act">🏛 Chichen Itza day trip</div>
+            <div class="act">🤿 Reef snorkeling (Mesoamerican Barrier Reef)</div>
+            <div class="act">🌅 Tulum ruins + beach</div>
+            <div class="act">🎉 Hotel Zone beach clubs & nightlife</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-block">
+        <div class="dest-header h-miami">
+          <div><span class="dest-id">[DEST-002]</span> <span class="dest-name">Miami</span></div>
+          <div class="dest-country">Florida, USA · Domestic</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-cheap">$600–$1,000 ($)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">2.5hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false (domestic)</span></div>
+          <div class="field"><span class="key">passport:</span><span class="val val-cheap">not required</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">beach</span><span class="val-tag">nightlife</span></span></div>
+          <div class="activities-list">
+            <div class="act">🏖 South Beach Art Deco district</div>
+            <div class="act">🎨 Wynwood Walls street art</div>
+            <div class="act">🌿 Everglades airboat tour</div>
+            <div class="act">🥘 Little Havana food + culture tour</div>
+            <div class="act">🎶 Ocean Drive nightlife & clubs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-block">
+        <div class="dest-header h-barcelona">
+          <div><span class="dest-id">[DEST-003]</span> <span class="dest-name">Barcelona</span></div>
+          <div class="dest-country">Catalonia, Spain · Europe</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-pricey">$1,800–$2,500 ($$$)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">10hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false (Schengen waiver)</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">culture</span><span class="val-tag">nightlife</span><span class="val-tag">europe</span></span></div>
+          <div class="activities-list">
+            <div class="act">⛪ La Sagrada Família (Gaudí)</div>
+            <div class="act">🏘 Gothic Quarter walking tour</div>
+            <div class="act">🏖 Barceloneta Beach</div>
+            <div class="act">🛍 Las Ramblas & La Boqueria market</div>
+            <div class="act">🕺 Port Olímpic nightclub strip</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-block">
+        <div class="dest-header h-cabo">
+          <div><span class="dest-id">[DEST-004]</span> <span class="dest-name">Cabo San Lucas</span></div>
+          <div class="dest-country">Baja California Sur, Mexico</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-mid">$1,000–$1,600 ($$)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">3.5hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">beach</span><span class="val-tag">resort</span></span></div>
+          <div class="activities-list">
+            <div class="act">🏔 El Arco (The Arch) boat tour</div>
+            <div class="act">🏖 Medano Beach day</div>
+            <div class="act">🏍 ATV desert off-road tour</div>
+            <div class="act">🐬 Dolphin & whale watching cruise</div>
+            <div class="act">🎉 Cabo Wabo / Squid Roe nightlife</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-block">
+        <div class="dest-header h-nola">
+          <div><span class="dest-id">[DEST-005]</span> <span class="dest-name">New Orleans</span></div>
+          <div class="dest-country">Louisiana, USA · Domestic</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-cheap">$500–$900 ($)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">2hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false (domestic)</span></div>
+          <div class="field"><span class="key">passport:</span><span class="val val-cheap">not required</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">food</span><span class="val-tag">culture</span><span class="val-tag">nightlife</span></span></div>
+          <div class="activities-list">
+            <div class="act">🎺 Jazz clubs on Frenchmen Street</div>
+            <div class="act">🍩 Beignets at Café Du Monde</div>
+            <div class="act">🐊 Bayou swamp tour</div>
+            <div class="act">🏘 Garden District walking tour</div>
+            <div class="act">🎉 Bourbon Street nightlife</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-block">
+        <div class="dest-header h-punta">
+          <div><span class="dest-id">[DEST-006]</span> <span class="dest-name">Punta Cana</span></div>
+          <div class="dest-country">La Altagracia, Dominican Republic</div>
+        </div>
+        <div class="dest-body">
+          <div class="field"><span class="key">price_range:</span><span class="val val-mid">$1,000–$1,500 ($$)</span></div>
+          <div class="field"><span class="key">flight_time:</span><span class="val">5hr from Midwest</span></div>
+          <div class="field"><span class="key">visa_required:</span><span class="val val-cheap">false</span></div>
+          <div class="field"><span class="key">passport:</span><span class="val val-pricey">REQUIRED</span></div>
+          <div class="field"><span class="key">tags:</span><span class="val"><span class="val-tag">resort</span><span class="val-tag">beach</span><span class="val-tag">all-inclusive</span></span></div>
+          <div class="activities-list">
+            <div class="act">🏖 All-inclusive beach resort</div>
+            <div class="act">⛵ Saona Island catamaran day trip</div>
+            <div class="act">🤿 Snorkeling & reef excursion</div>
+            <div class="act">🪂 Zip-lining & adventure park</div>
+            <div class="act">🐴 Horseback riding on the beach</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="separator">
+      <div><span class="prompt"><span class="user">student</span><span class="sep">@</span><span class="path">~/senior-trip</span> $</span> <span class="cmd">echo "Time to decide, class of 2026"</span></div>
+      <div class="output"><div class="success">Time to decide, class of 2026</div></div>
+      <div><span class="prompt"><span class="user">student</span><span class="sep">@</span><span class="path">~/senior-trip</span> $</span><span class="cursor"></span></div>
+    </div>
+  </div>
+</body>
+</html>

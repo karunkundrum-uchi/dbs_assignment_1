@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Map</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #1a2744; color: #fff; min-height: 100vh; overflow-x: hidden; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; background: #111d38; border-bottom: 1px solid #ffffff15; }
+    header h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
+    header p { font-size: 0.8rem; color: #8899bb; }
+    .back { color: #7b9cff; text-decoration: none; font-size: 0.8rem; }
+    .map-container { position: relative; width: 100%; max-width: 1200px; margin: 32px auto; padding: 0 24px; }
+    .hint { text-align: center; color: #8899bb; font-size: 0.8rem; margin-bottom: 16px; letter-spacing: 1px; }
+    .map-wrap { position: relative; background: #243560; border-radius: 12px; border: 1px solid #ffffff15; overflow: visible; }
+    /* SVG map */
+    svg.world { width: 100%; height: auto; display: block; border-radius: 12px; }
+    /* Pin wrapper — each pin is a positioned label inside the SVG using foreignObject */
+    .pin-group { cursor: pointer; }
+    .pin-circle { fill: #ff6b6b; stroke: #fff; stroke-width: 2; transition: r 0.2s; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
+    .pin-group:hover .pin-circle { fill: #ffd200; }
+    .pin-label { fill: #fff; font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; pointer-events: none; }
+    /* Popup */
+    .popup { position: absolute; background: #0f1b36; border: 1px solid #ffffff25; border-radius: 12px; padding: 16px; width: 240px; z-index: 10; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s; transform: translateY(8px); pointer-events: none; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+    .pin-group:hover + .popup,
+    .popup:hover { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+    /* Trick: wrap each pin+popup in a parent div that stays hovered */
+    .dest { position: absolute; }
+    .dest:hover .popup { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+    .dest:hover .pin-dot { background: #ffd200; transform: scale(1.3); }
+    .pin-dot { width: 14px; height: 14px; border-radius: 50%; background: #ff6b6b; border: 2px solid #fff; cursor: pointer; transition: background 0.2s, transform 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.5); position: relative; z-index: 2; }
+    .pin-dot::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: #ff6b6b; width: 0; height: 0; }
+    .dest:hover .pin-dot::after { border-top-color: #ffd200; }
+    .popup { position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(8px); opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s; width: 240px; background: #0f1b36; border: 1px solid #ffffff25; border-radius: 12px; padding: 16px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.6); pointer-events: none; }
+    .dest:hover .popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .popup img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+    .popup h3 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; color: #fff; }
+    .popup .country { font-size: 0.7rem; color: #8899bb; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+    .popup .row { display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+    .popup .badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #ffffff15; color: #ccd6ff; }
+    .popup .meta { font-size: 0.75rem; color: #aab4cc; margin-top: 6px; }
+    .popup .meta span { display: block; }
+
+    /* Destination positions — percentages of SVG viewBox */
+    /* Map viewBox: 0 0 1000 500 */
+    /* Cancun: ~230, 235 */
+    #dest-cancun    { left: 22.5%; top: 49%; }
+    /* Miami: ~245, 215 */
+    #dest-miami     { left: 24.5%; top: 43%; }
+    /* Barcelona: ~490, 165 */
+    #dest-barcelona { left: 49.5%; top: 33%; }
+    /* Cabo: ~185, 230 */
+    #dest-cabo      { left: 18%; top: 47%; }
+    /* New Orleans: ~230, 205 */
+    #dest-nola      { left: 23%; top: 41%; }
+    /* Punta Cana: ~265, 245 */
+    #dest-punta     { left: 26.5%; top: 50%; }
+
+    .map-svg-wrap { position: relative; }
+
+    footer { text-align: center; padding: 24px; color: #8899bb; font-size: 0.8rem; }
+    footer a { color: #7b9cff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Senior Trip 2026</h1>
+      <p>Hover a pin to explore the destination</p>
+    </div>
+    <a href="../index.html" class="back">← All Versions</a>
+  </header>
+
+  <div class="map-container">
+    <p class="hint">Hover over a pin to see destination details</p>
+    <div class="map-svg-wrap">
+      <!-- Simplified world map SVG focusing on Americas + Europe -->
+      <svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;border-radius:12px;">
+        <!-- Ocean background -->
+        <rect width="1000" height="520" fill="#1e3a6e" rx="12"/>
+        <!-- Grid lines -->
+        <g stroke="#ffffff08" stroke-width="1">
+          <line x1="0" y1="130" x2="1000" y2="130"/>
+          <line x1="0" y1="260" x2="1000" y2="260"/>
+          <line x1="0" y1="390" x2="1000" y2="390"/>
+          <line x1="250" y1="0" x2="250" y2="520"/>
+          <line x1="500" y1="0" x2="500" y2="520"/>
+          <line x1="750" y1="0" x2="750" y2="520"/>
+        </g>
+        <!-- North America landmass (simplified) -->
+        <path d="M 80 60 L 160 50 L 230 60 L 280 80 L 310 120 L 300 180 L 270 220 L 250 280 L 220 300 L 200 260 L 180 220 L 160 200 L 140 180 L 120 160 L 100 140 L 80 120 Z" fill="#2d5a3d" opacity="0.9"/>
+        <!-- Central America / Caribbean region -->
+        <path d="M 200 260 L 230 250 L 260 265 L 255 285 L 235 290 L 210 280 Z" fill="#2d5a3d" opacity="0.9"/>
+        <!-- Caribbean islands (simplified dots) -->
+        <ellipse cx="270" cy="255" rx="8" ry="5" fill="#2d5a3d" opacity="0.8"/>
+        <ellipse cx="285" cy="258" rx="6" ry="4" fill="#2d5a3d" opacity="0.8"/>
+        <ellipse cx="295" cy="262" rx="5" ry="3" fill="#2d5a3d" opacity="0.8"/>
+        <!-- Mexico Baja -->
+        <path d="M 160 200 L 175 210 L 185 240 L 178 255 L 165 245 L 158 225 Z" fill="#2d5a3d" opacity="0.9"/>
+        <!-- South America (simplified) -->
+        <path d="M 230 300 L 310 280 L 360 300 L 370 380 L 340 440 L 280 460 L 240 420 L 220 360 L 225 320 Z" fill="#2d5a3d" opacity="0.9"/>
+        <!-- Europe (simplified) -->
+        <path d="M 430 80 L 530 70 L 580 90 L 590 130 L 560 160 L 520 170 L 480 165 L 450 150 L 420 130 L 415 110 Z" fill="#3a6b4e" opacity="0.9"/>
+        <!-- Spain specifically -->
+        <path d="M 450 150 L 510 145 L 520 170 L 495 185 L 460 180 L 445 168 Z" fill="#3a8f5a" opacity="0.9"/>
+        <!-- UK / Ireland -->
+        <path d="M 430 90 L 450 85 L 460 100 L 450 115 L 435 118 L 425 108 Z" fill="#3a6b4e" opacity="0.8"/>
+        <!-- Africa (simplified) -->
+        <path d="M 450 200 L 560 190 L 600 250 L 590 360 L 530 400 L 470 380 L 440 300 L 435 240 Z" fill="#4a7a3a" opacity="0.7"/>
+        <!-- Equator line -->
+        <line x1="0" y1="310" x2="1000" y2="310" stroke="#ffffff18" stroke-width="1" stroke-dasharray="8,8"/>
+        <text x="10" y="307" fill="#ffffff30" font-size="9" font-family="Inter">Equator</text>
+        <!-- Tropic of Cancer -->
+        <line x1="0" y1="235" x2="1000" y2="235" stroke="#ffffff10" stroke-width="1" stroke-dasharray="4,8"/>
+        <!-- Asia / Russia (simplified background mass) -->
+        <path d="M 580 60 L 900 40 L 1000 80 L 1000 200 L 900 220 L 800 200 L 750 180 L 700 170 L 650 160 L 600 150 L 575 130 Z" fill="#2d5a3d" opacity="0.6"/>
+      </svg>
+
+      <!-- Destination pins overlaid on map -->
+      <!-- Cancun -->
+      <div class="dest" id="dest-cancun">
+        <div class="pin-dot"></div>
+        <div class="popup">
+          <img src="../images/cancun.jpg" alt="Cancun">
+          <h3>Cancun</h3>
+          <div class="country">Mexico · Caribbean Coast</div>
+          <div class="row">
+            <span class="badge">Beach</span>
+            <span class="badge">Nightlife</span>
+          </div>
+          <div class="meta">
+            <span>💰 $900–$1,400</span>
+            <span>✈️ 3hr flight · No visa</span>
+            <span>🌊 Cenotes · Chichen Itza · Reef</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Miami -->
+      <div class="dest" id="dest-miami">
+        <div class="pin-dot" style="background:#48dbfb;"></div>
+        <div class="popup">
+          <img src="../images/miami.jpg" alt="Miami">
+          <h3>Miami</h3>
+          <div class="country">Florida, USA · Domestic</div>
+          <div class="row">
+            <span class="badge">Beach</span>
+            <span class="badge">Nightlife</span>
+          </div>
+          <div class="meta">
+            <span>💰 $600–$1,000</span>
+            <span>✈️ 2.5hr flight · Domestic</span>
+            <span>🏖 South Beach · Wynwood · Everglades</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barcelona -->
+      <div class="dest" id="dest-barcelona">
+        <div class="pin-dot" style="background:#ffd200;"></div>
+        <div class="popup" style="left:auto;right:0;transform:translateX(0) translateY(8px);">
+          <img src="../images/barcelona.jpg" alt="Barcelona">
+          <h3>Barcelona</h3>
+          <div class="country">Spain · Europe</div>
+          <div class="row">
+            <span class="badge">Culture</span>
+            <span class="badge">Nightlife</span>
+          </div>
+          <div class="meta">
+            <span>💰 $1,800–$2,500</span>
+            <span>✈️ 10hr flight · No visa</span>
+            <span>⛪ Sagrada Família · Gothic Quarter</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cabo -->
+      <div class="dest" id="dest-cabo">
+        <div class="pin-dot" style="background:#ff9f43;"></div>
+        <div class="popup">
+          <img src="../images/cabo.jpg" alt="Cabo">
+          <h3>Cabo San Lucas</h3>
+          <div class="country">Mexico · Baja Peninsula</div>
+          <div class="row">
+            <span class="badge">Beach</span>
+            <span class="badge">Resort</span>
+          </div>
+          <div class="meta">
+            <span>💰 $1,000–$1,600</span>
+            <span>✈️ 3.5hr flight · No visa</span>
+            <span>🏔 El Arco · Desert ATV · Dolphins</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Orleans -->
+      <div class="dest" id="dest-nola">
+        <div class="pin-dot" style="background:#a29bfe;"></div>
+        <div class="popup">
+          <img src="../images/new-orleans.jpg" alt="New Orleans">
+          <h3>New Orleans</h3>
+          <div class="country">Louisiana, USA · Domestic</div>
+          <div class="row">
+            <span class="badge">Food</span>
+            <span class="badge">Culture</span>
+            <span class="badge">Nightlife</span>
+          </div>
+          <div class="meta">
+            <span>💰 $500–$900</span>
+            <span>✈️ 2hr flight · Domestic</span>
+            <span>🎺 Jazz · Beignets · Bourbon St</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Punta Cana -->
+      <div class="dest" id="dest-punta">
+        <div class="pin-dot" style="background:#55efc4;"></div>
+        <div class="popup">
+          <img src="../images/punta-cana.jpg" alt="Punta Cana">
+          <h3>Punta Cana</h3>
+          <div class="country">Dominican Republic · Caribbean</div>
+          <div class="row">
+            <span class="badge">Resort</span>
+            <span class="badge">Beach</span>
+          </div>
+          <div class="meta">
+            <span>💰 $1,000–$1,500</span>
+            <span>✈️ 5hr flight · Passport req.</span>
+            <span>⛵ All-inclusive · Saona Island</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end map-svg-wrap -->
+
+    <!-- Legend -->
+    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#ff6b6b;"></div> Cancun
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#48dbfb;"></div> Miami
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#ffd200;"></div> Barcelona
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#ff9f43;"></div> Cabo San Lucas
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#a29bfe;"></div> New Orleans
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#8899bb;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#55efc4;"></div> Punta Cana
+      </div>
+    </div>
+  </div>
+
+  <footer><a href="../index.html">← All Versions</a> · Class of 2026</footer>
+</body>
+</html>

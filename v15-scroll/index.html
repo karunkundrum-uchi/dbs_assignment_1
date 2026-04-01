@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Scrollytelling</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-snap-type: y mandatory; overflow-y: scroll; }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Back link — fixed */
+    .back { position: fixed; top: 20px; left: 24px; z-index: 200; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.8rem; background: rgba(0,0,0,0.4); padding: 6px 14px; border-radius: 20px; backdrop-filter: blur(6px); transition: background 0.2s; }
+    .back:hover { background: rgba(0,0,0,0.7); color: #fff; }
+
+    /* Scroll dots */
+    .dots { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+
+    section {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      animation: subtle-zoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes subtle-zoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+    .overlay { position: absolute; inset: 0; }
+
+    .content {
+      position: relative; z-index: 2;
+      padding: 60px 80px;
+      max-width: 700px;
+      animation: fade-up 0.8s ease both;
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .num { font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+    .dest-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 700; line-height: 1; color: #fff; margin-bottom: 8px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .country { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+    .tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; color: rgba(255,255,255,0.85); margin-bottom: 24px; line-height: 1.4; }
+    .info-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .pill { padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; background: rgba(255,255,255,0.15); color: #fff; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); }
+    .divider { width: 40px; height: 2px; background: rgba(255,255,255,0.4); margin-bottom: 20px; }
+    .activities { display: flex; flex-wrap: wrap; gap: 8px; }
+    .act { font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+    .act::after { content: ' ·'; color: rgba(255,255,255,0.3); }
+    .act:last-child::after { display: none; }
+
+    /* Scroll hint on first section */
+    .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2; }
+    .scroll-hint .arrow { animation: bounce 1.5s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* Per-section overlays */
+    .s1 .overlay { background: linear-gradient(135deg, rgba(255,107,107,0.6) 0%, rgba(0,0,0,0.5) 100%); }
+    .s2 .overlay { background: linear-gradient(135deg, rgba(72,219,251,0.5) 0%, rgba(0,0,0,0.55) 100%); }
+    .s3 .overlay { background: linear-gradient(135deg, rgba(255,210,0,0.5) 0%, rgba(0,0,0,0.6) 100%); }
+    .s4 .overlay { background: linear-gradient(135deg, rgba(255,159,67,0.5) 0%, rgba(0,0,0,0.55) 100%); }
+    .s5 .overlay { background: linear-gradient(135deg, rgba(162,155,254,0.5) 0%, rgba(0,0,0,0.55) 100%); }
+    .s6 .overlay { background: linear-gradient(135deg, rgba(85,239,196,0.4) 0%, rgba(0,0,0,0.55) 100%); }
+
+    @media (max-width: 600px) {
+      .content { padding: 60px 28px; }
+      .dest-name { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back">← All Versions</a>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <section class="s1">
+    <div class="bg" style="background-image:url('../images/cancun.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 01</div>
+      <div class="dest-name">Cancun</div>
+      <div class="country">Mexico · Caribbean Coast</div>
+      <div class="tagline">"Where the Caribbean horizon glows and the party never ends"</div>
+      <div class="info-pills">
+        <span class="pill">💰 $900–$1,400</span>
+        <span class="pill">✈️ 3hr flight</span>
+        <span class="pill">No visa</span>
+        <span class="pill">Beach</span>
+        <span class="pill">Nightlife</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">🌊 Cenotes swim</span>
+        <span class="act">🏛 Chichen Itza</span>
+        <span class="act">🤿 Reef snorkeling</span>
+        <span class="act">🌅 Tulum ruins</span>
+        <span class="act">🎉 Hotel Zone nightlife</span>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><span class="arrow">↓</span></div>
+  </section>
+
+  <section class="s2">
+    <div class="bg" style="background-image:url('../images/miami.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 02</div>
+      <div class="dest-name">Miami</div>
+      <div class="country">Florida, USA · Domestic</div>
+      <div class="tagline">"No passport needed. All the heat, all the vibes."</div>
+      <div class="info-pills">
+        <span class="pill">💰 $600–$1,000</span>
+        <span class="pill">✈️ 2.5hr flight</span>
+        <span class="pill">Domestic</span>
+        <span class="pill">Beach</span>
+        <span class="pill">Nightlife</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">🏖 South Beach</span>
+        <span class="act">🎨 Wynwood Walls</span>
+        <span class="act">🌿 Everglades</span>
+        <span class="act">🥘 Little Havana</span>
+        <span class="act">🎶 Ocean Drive</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="s3">
+    <div class="bg" style="background-image:url('../images/barcelona.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 03</div>
+      <div class="dest-name">Barcelona</div>
+      <div class="country">Spain · Europe</div>
+      <div class="tagline">"Gaudí cathedrals by day. Europe's best clubs until dawn."</div>
+      <div class="info-pills">
+        <span class="pill">💰 $1,800–$2,500</span>
+        <span class="pill">✈️ 10hr flight</span>
+        <span class="pill">No visa</span>
+        <span class="pill">Culture</span>
+        <span class="pill">Nightlife</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">⛪ Sagrada Família</span>
+        <span class="act">🏘 Gothic Quarter</span>
+        <span class="act">🏖 Barceloneta</span>
+        <span class="act">🛍 La Boqueria</span>
+        <span class="act">🕺 Port Olímpic clubs</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="s4">
+    <div class="bg" style="background-image:url('../images/cabo.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 04</div>
+      <div class="dest-name">Cabo San Lucas</div>
+      <div class="country">Mexico · Baja Peninsula</div>
+      <div class="tagline">"Where the Sonoran desert dives dramatically into the sea."</div>
+      <div class="info-pills">
+        <span class="pill">💰 $1,000–$1,600</span>
+        <span class="pill">✈️ 3.5hr flight</span>
+        <span class="pill">No visa</span>
+        <span class="pill">Beach</span>
+        <span class="pill">Resort</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">🏔 El Arco boat tour</span>
+        <span class="act">🏖 Medano Beach</span>
+        <span class="act">🏍 Desert ATV</span>
+        <span class="act">🐬 Dolphin cruise</span>
+        <span class="act">🎉 Cabo Wabo</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="s5">
+    <div class="bg" style="background-image:url('../images/new-orleans.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 05</div>
+      <div class="dest-name">New Orleans</div>
+      <div class="country">Louisiana, USA · Domestic</div>
+      <div class="tagline">"America's most soulful city — jazz, food, and pure magic."</div>
+      <div class="info-pills">
+        <span class="pill">💰 $500–$900</span>
+        <span class="pill">✈️ 2hr flight</span>
+        <span class="pill">Domestic</span>
+        <span class="pill">Food</span>
+        <span class="pill">Culture</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">🎺 Frenchmen St jazz</span>
+        <span class="act">🍩 Café Du Monde</span>
+        <span class="act">🐊 Bayou tour</span>
+        <span class="act">🏘 Garden District</span>
+        <span class="act">🎉 Bourbon Street</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="s6">
+    <div class="bg" style="background-image:url('../images/punta-cana.jpg')"></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="num">Destination 06</div>
+      <div class="dest-name">Punta Cana</div>
+      <div class="country">Dominican Republic · Caribbean</div>
+      <div class="tagline">"All-inclusive paradise. Zero decisions required."</div>
+      <div class="info-pills">
+        <span class="pill">💰 $1,000–$1,500</span>
+        <span class="pill">✈️ 5hr flight</span>
+        <span class="pill">Passport req.</span>
+        <span class="pill">Resort</span>
+        <span class="pill">Beach</span>
+      </div>
+      <div class="divider"></div>
+      <div class="activities">
+        <span class="act">🏖 All-inclusive resort</span>
+        <span class="act">⛵ Saona Island</span>
+        <span class="act">🤿 Snorkeling</span>
+        <span class="act">🪂 Zip-lining</span>
+        <span class="act">🐴 Horseback beach</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

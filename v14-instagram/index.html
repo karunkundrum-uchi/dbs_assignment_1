@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Instagram Feed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fafafa; color: #1a1a1a; }
+
+    /* Top nav */
+    .ig-nav { background: #fff; border-bottom: 1px solid #dbdbdb; position: sticky; top: 0; z-index: 100; }
+    .ig-nav-inner { max-width: 470px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .ig-nav .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
+    .ig-nav .back { color: #0095f6; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+
+    /* Stories */
+    .stories-bar { background: #fff; border-bottom: 1px solid #dbdbdb; padding: 12px 0; margin-bottom: 0; }
+    .stories-inner { max-width: 470px; margin: 0 auto; padding: 0 8px; display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; }
+    .stories-inner::-webkit-scrollbar { display: none; }
+    .story { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+    .story-ring {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      padding: 2px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .story-ring .inner { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #fafafa; overflow: hidden; }
+    .story-ring .inner img { width: 100%; height: 100%; object-fit: cover; }
+    .story span { font-size: 0.65rem; color: #333; max-width: 60px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Feed */
+    .feed { max-width: 470px; margin: 0 auto; }
+
+    .post { background: #fff; border: 1px solid #dbdbdb; margin-bottom: 12px; }
+    .post-header { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+    .post-avatar { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .post-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .post-username { font-size: 0.85rem; font-weight: 600; }
+    .post-location { font-size: 0.72rem; color: #555; }
+    .post-more { margin-left: auto; font-size: 1.2rem; color: #333; cursor: pointer; }
+    .post-img { width: 100%; aspect-ratio: 1; overflow: hidden; position: relative; }
+    .post-img img { width: 100%; height: 100%; object-fit: cover; transition: filter 0.3s; }
+    .post:hover .post-img img { filter: brightness(0.92); }
+    .post-actions { padding: 8px 12px 4px; display: flex; gap: 14px; align-items: center; }
+    .post-actions .action { font-size: 1.3rem; cursor: pointer; }
+    .post-actions .save { margin-left: auto; }
+    .post-likes { padding: 0 12px 6px; font-size: 0.85rem; font-weight: 600; }
+    .post-caption { padding: 0 12px 6px; font-size: 0.85rem; line-height: 1.5; }
+    .post-caption strong { font-weight: 600; }
+    .post-caption .hashtags { color: #0095f6; }
+    .post-tags { padding: 0 12px 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .post-tag { font-size: 0.7rem; background: #f0f0f0; padding: 3px 8px; border-radius: 12px; color: #555; }
+    .post-meta { padding: 0 12px 6px; }
+    .post-meta .price-tag { display: inline-flex; align-items: center; gap: 6px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; color: #856404; }
+    .post-meta .flight-tag { display: inline-flex; align-items: center; gap: 6px; background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; color: #0c5460; margin-left: 6px; }
+    .post-comments { padding: 0 12px 4px; }
+    .post-comments .comment { font-size: 0.82rem; margin-bottom: 3px; }
+    .post-comments .comment strong { font-weight: 600; }
+    .post-comments .more { font-size: 0.8rem; color: #999; }
+    .post-time { padding: 0 12px 12px; font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px; }
+    .post-add-comment { padding: 8px 12px; border-top: 1px solid #efefef; display: flex; align-items: center; gap: 8px; }
+    .post-add-comment input { border: none; outline: none; font-size: 0.82rem; color: #555; background: transparent; flex: 1; font-family: inherit; }
+    .post-add-comment .post-btn { color: #0095f6; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+
+    footer { text-align: center; padding: 24px; color: #ccc; font-size: 0.75rem; }
+    footer a { color: #0095f6; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="ig-nav">
+    <div class="ig-nav-inner">
+      <div class="logo">seniortrip2026</div>
+      <a href="../index.html" class="back">← All Versions</a>
+    </div>
+  </div>
+
+  <div class="stories-bar">
+    <div class="stories-inner">
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/cancun.jpg" alt=""></div></div><span>cancun</span></div>
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/miami.jpg" alt=""></div></div><span>miami</span></div>
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/barcelona.jpg" alt=""></div></div><span>barcelona</span></div>
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/cabo.jpg" alt=""></div></div><span>cabo</span></div>
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/new-orleans.jpg" alt=""></div></div><span>new_orleans</span></div>
+      <div class="story"><div class="story-ring"><div class="inner"><img src="../images/punta-cana.jpg" alt=""></div></div><span>punta_cana</span></div>
+    </div>
+  </div>
+
+  <div class="feed">
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/cancun.jpg" alt=""></div>
+        <div><div class="post-username">cancun.mexico</div><div class="post-location">Cancun, Quintana Roo</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/cancun.jpg" alt="Cancun"></div>
+      <div class="post-actions">
+        <span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span>
+        <span class="action save">🔖</span>
+      </div>
+      <div class="post-likes">4,821 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $900–$1,400</span><span class="flight-tag">✈️ 3hr · No visa</span></div>
+      <div class="post-caption"><strong>cancun.mexico</strong> Sun, sand, and the best cenotes you've ever seen 🌊 Chichen Itza is literally 2 hours away and Tulum hits different at sunset 🌅 The hotel zone goes OFF at night 🎉 <span class="hashtags">#cancun #mexico #seniortrip2026 #beach #cenotes #tulum</span></div>
+      <div class="post-tags"><span class="post-tag">Beach</span><span class="post-tag">Nightlife</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>sarah_k</strong> I went last spring omg it was PERFECT</div>
+        <div class="comment"><strong>jmarc22</strong> cenotes are insane fr</div>
+        <div class="more">View all 47 comments</div>
+      </div>
+      <div class="post-time">2 days ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/miami.jpg" alt=""></div>
+        <div><div class="post-username">miami.vibes</div><div class="post-location">Miami Beach, Florida</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/miami.jpg" alt="Miami"></div>
+      <div class="post-actions"><span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span><span class="action save">🔖</span></div>
+      <div class="post-likes">6,204 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $600–$1,000</span><span class="flight-tag">✈️ 2.5hr · Domestic</span></div>
+      <div class="post-caption"><strong>miami.vibes</strong> No passport? No problem 🏖 Art Deco on Ocean Drive, street art in Wynwood, airboats in the Everglades, and Little Havana for the best coffee of your life ☕ Then Ocean Drive after dark 🎶 <span class="hashtags">#miami #southbeach #wynwood #seniortrip2026 #nopassportneeded</span></div>
+      <div class="post-tags"><span class="post-tag">Beach</span><span class="post-tag">Nightlife</span><span class="post-tag">Domestic</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>alex_trip</strong> Wynwood walls are so good!!</div>
+        <div class="comment"><strong>brit2026</strong> miami is so underrated for senior trips</div>
+        <div class="more">View all 89 comments</div>
+      </div>
+      <div class="post-time">3 days ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/barcelona.jpg" alt=""></div>
+        <div><div class="post-username">barcelona.vida</div><div class="post-location">Barcelona, Catalunya, Spain</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/barcelona.jpg" alt="Barcelona"></div>
+      <div class="post-actions"><span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span><span class="action save">🔖</span></div>
+      <div class="post-likes">12,447 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $1,800–$2,500</span><span class="flight-tag">✈️ 10hr · No visa</span></div>
+      <div class="post-caption"><strong>barcelona.vida</strong> Gaudí for breakfast, Barceloneta for lunch, La Boqueria for snacks, and Port Olímpic until 6am 🕺 The Gothic Quarter alone is worth the 10-hour flight ⛪ Europe, baby. No visa needed. <span class="hashtags">#barcelona #spain #sagradafamilia #eurotrip #seniortrip2026</span></div>
+      <div class="post-tags"><span class="post-tag">Culture</span><span class="post-tag">Nightlife</span><span class="post-tag">Europe</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>emilyj</strong> GOING HERE after graduation !!</div>
+        <div class="comment"><strong>travel.tom</strong> gothic quarter is unreal at night</div>
+        <div class="more">View all 203 comments</div>
+      </div>
+      <div class="post-time">4 days ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/cabo.jpg" alt=""></div>
+        <div><div class="post-username">cabo.sunsets</div><div class="post-location">Cabo San Lucas, BCS, Mexico</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/cabo.jpg" alt="Cabo"></div>
+      <div class="post-actions"><span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span><span class="action save">🔖</span></div>
+      <div class="post-likes">8,119 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $1,000–$1,600</span><span class="flight-tag">✈️ 3.5hr · No visa</span></div>
+      <div class="post-caption"><strong>cabo.sunsets</strong> El Arco at golden hour hits different 🏔 Desert ATV in the morning, dolphins in the afternoon, Cabo Wabo at night 🌊 Where the desert meets the ocean and it's all perfect <span class="hashtags">#cabosanlucas #mexico #elarco #seniortrip2026 #bajacalifornia</span></div>
+      <div class="post-tags"><span class="post-tag">Beach</span><span class="post-tag">Resort</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>marco_r</strong> el arco is breathtaking wow</div>
+        <div class="comment"><strong>kat_2026</strong> the ATV tour is so fun!!</div>
+        <div class="more">View all 61 comments</div>
+      </div>
+      <div class="post-time">5 days ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/new-orleans.jpg" alt=""></div>
+        <div><div class="post-username">nola.forever</div><div class="post-location">New Orleans, Louisiana</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/new-orleans.jpg" alt="New Orleans"></div>
+      <div class="post-actions"><span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span><span class="action save">🔖</span></div>
+      <div class="post-likes">5,382 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $500–$900</span><span class="flight-tag">✈️ 2hr · Domestic</span></div>
+      <div class="post-caption"><strong>nola.forever</strong> Beignets at Café Du Monde at 2am after Frenchmen Street jazz 🎺🍩 Bayou swamp tour in the morning, Garden District in the afternoon, Bourbon Street whenever you're ready 🎉 The most soulful city in America, no question <span class="hashtags">#neworleans #nola #jazz #bourbonstreet #seniortrip2026 #cajun</span></div>
+      <div class="post-tags"><span class="post-tag">Food</span><span class="post-tag">Culture</span><span class="post-tag">Nightlife</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>jess_eats</strong> café du monde is a MUST</div>
+        <div class="comment"><strong>drumline22</strong> frenchmen st >>>>>>> bourbon st</div>
+        <div class="more">View all 77 comments</div>
+      </div>
+      <div class="post-time">1 week ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+    <div class="post">
+      <div class="post-header">
+        <div class="post-avatar"><img src="../images/punta-cana.jpg" alt=""></div>
+        <div><div class="post-username">puntacana.resort</div><div class="post-location">Punta Cana, Dominican Republic</div></div>
+        <div class="post-more">···</div>
+      </div>
+      <div class="post-img"><img src="../images/punta-cana.jpg" alt="Punta Cana"></div>
+      <div class="post-actions"><span class="action">🤍</span><span class="action">💬</span><span class="action">✈️</span><span class="action save">🔖</span></div>
+      <div class="post-likes">9,671 likes</div>
+      <div class="post-meta"><span class="price-tag">💰 $1,000–$1,500</span><span class="flight-tag">✈️ 5hr · Passport req.</span></div>
+      <div class="post-caption"><strong>puntacana.resort</strong> All-inclusive means one decision: do nothing, or do everything 🏖 Saona Island catamaran, snorkeling on the reef, zip-lining through the jungle, horseback riding on the beach at sunset 🐴 Yes, you need a passport. Worth it. <span class="hashtags">#puntacana #dominicanrepublic #allinclusive #caribbean #seniortrip2026</span></div>
+      <div class="post-tags"><span class="post-tag">Resort</span><span class="post-tag">Beach</span><span class="post-tag">All-Inclusive</span></div>
+      <div class="post-comments">
+        <div class="comment"><strong>tay.beach</strong> saona island is paradise omg</div>
+        <div class="comment"><strong>grad2026</strong> we're going here I've decided</div>
+        <div class="more">View all 134 comments</div>
+      </div>
+      <div class="post-time">1 week ago</div>
+      <div class="post-add-comment"><input type="text" placeholder="Add a comment…" readonly><span class="post-btn">Post</span></div>
+    </div>
+
+  </div>
+  <footer><a href="../index.html">← All Versions</a> · Class of 2026</footer>
+</body>
+</html>
