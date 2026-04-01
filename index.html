@@ -30,6 +30,12 @@
       color: #aaa;
       font-size: 1.1rem;
     }
+    header .sub {
+      color: #555;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -94,10 +100,11 @@
 
     .section-divider {
       max-width: 1100px;
-      margin: 40px auto 8px;
+      margin: 48px auto 4px;
       padding: 0 24px;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 16px;
     }
     .section-divider h2 {
@@ -114,6 +121,27 @@
       height: 1px;
       background: #222;
     }
+    .section-divider p {
+      width: 100%;
+      font-size: 0.72rem;
+      color: #444;
+      letter-spacing: 0.5px;
+      margin-top: -8px;
+    }
+
+    .v2::after {
+      content: 'CHOSEN';
+      position: absolute; top: 12px; right: -1px;
+      background: #f5a623; color: #1a1a1a;
+      font-size: 0.55rem; font-weight: 800;
+      letter-spacing: 2px; padding: 4px 10px;
+      text-transform: uppercase;
+    }
+
+    .final-card { grid-column: 1 / -1; }
+    .final-card .card-inner { height: 220px; justify-content: center; }
+    .final-card .name { font-size: 2rem; }
+    .final-card .desc { font-size: 1rem; opacity: 0.9; }
     footer {
       text-align: center;
       padding: 24px;
@@ -125,10 +153,11 @@
 <body>
   <header>
     <h1>Senior Trip 2026</h1>
-    <p>Six destinations. Twenty ways to explore them. Pick your vibe or layout.</p>
+    <p>Exploring 20 design directions. Choosing one. Refining it to a final.</p>
+    <div class="sub">Six destinations &middot; 25 versions &middot; one design process</div>
   </header>
 
-  <div class="section-divider"><h2>Pick Your Vibe — Aesthetic Styles</h2></div>
+  <div class="section-divider"><h2>Phase 1 — Aesthetic Exploration</h2><p>10 visual styles applied to the same content — exploring tone, color, and personality</p></div>
   <div class="grid">
     <a href="v1-tropical/index.html" class="vibe-card v1">
       <div class="card-inner">
@@ -202,7 +231,7 @@
     </a>
   </div>
 
-  <div class="section-divider"><h2>Pick Your Layout — Interaction Styles</h2></div>
+  <div class="section-divider"><h2>Phase 2 — Layout Exploration</h2><p>10 interaction patterns and structural layouts — exploring how users navigate the content</p></div>
   <div class="grid">
     <a href="v11-map/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1a2744,#2d5a8e);">
       <div class="card-inner"><div class="num">Version 11</div><div class="name">Interactive Map</div><div class="desc">Hover pins on a world map</div></div>
@@ -236,7 +265,7 @@
     </a>
   </div>
 
-  <div class="section-divider"><h2>Finalizing Designs</h2></div>
+  <div class="section-divider"><h2>Phase 3 — Iteration</h2><p>Selected Retro Travel Poster (v2) as the strongest aesthetic · added quiz, deep-dive destination pages, and fact-checked all content</p></div>
   <div class="grid">
     <a href="v21-retro-quiz/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1a2744,#c94b4b);">
       <div class="card-inner">
@@ -268,13 +297,13 @@
     </a>
   </div>
 
-  <div class="section-divider"><h2>Final Version</h2></div>
+  <div class="section-divider"><h2>Final Design</h2><p>The complete version — photo slideshow heroes, full destination guides, and a vibe quiz</p></div>
   <div class="grid">
-    <a href="v25-retro-slideshow/index.html" class="vibe-card" style="background:linear-gradient(135deg,#1a2744,#c94b4b,#f5a623);">
+    <a href="v25-retro-slideshow/index.html" class="vibe-card final-card" style="background:linear-gradient(135deg,#1a2744,#c94b4b,#f5a623);box-shadow:0 0 0 3px #f5a623;">
       <div class="card-inner">
         <div class="num">Version 25</div>
         <div class="name">Retro — Final</div>
-        <div class="desc">Slideshow hero photos · full guides · quiz</div>
+        <div class="desc">Slideshow hero photos · full destination guides · vibe quiz</div>
       </div>
     </a>
   </div>
