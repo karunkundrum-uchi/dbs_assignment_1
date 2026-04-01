@@ -30,13 +30,20 @@
     .hero {
       width: 100%; height: 420px; position: relative; overflow: hidden;
     }
-    .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.4) contrast(1.1); opacity: 0; animation: heroFade 20s infinite; }
-    .hero-slide:nth-child(1) { opacity: 1; animation-delay: 0s; }
-    .hero-slide:nth-child(2) { animation-delay: 4s; }
-    .hero-slide:nth-child(3) { animation-delay: 8s; }
-    .hero-slide:nth-child(4) { animation-delay: 12s; }
-    .hero-slide:nth-child(5) { animation-delay: 16s; }
-    @keyframes heroFade { 0%, 17% { opacity: 1; } 20%, 97% { opacity: 0; } 100% { opacity: 1; } }
+    .slide-radio { display: none; }
+    .hero-slides { position: absolute; inset: 0; }
+    .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.4) contrast(1.1); opacity: 0; transition: opacity 0.6s ease; }
+    #s1:checked ~ .hero-slides .hero-slide:nth-child(1),
+    #s2:checked ~ .hero-slides .hero-slide:nth-child(2),
+    #s3:checked ~ .hero-slides .hero-slide:nth-child(3),
+    #s4:checked ~ .hero-slides .hero-slide:nth-child(4),
+    #s5:checked ~ .hero-slides .hero-slide:nth-child(5) { opacity: 1; }
+    .slide-arr { display: none; position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; background: rgba(26,39,68,0.82); border: 2px solid rgba(245,166,35,0.9); color: #f5a623; font-size: 2rem; line-height: 1; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; user-select: none; }
+    .slide-arr:hover { background: rgba(26,39,68,1); border-color: #f5a623; }
+    .slide-arr-prev { left: 16px; }
+    .slide-arr-next { right: 16px; }
+    #s1:checked ~ .slide-arr-p1, #s2:checked ~ .slide-arr-p2, #s3:checked ~ .slide-arr-p3, #s4:checked ~ .slide-arr-p4, #s5:checked ~ .slide-arr-p5 { display: flex; }
+    #s1:checked ~ .slide-arr-n1, #s2:checked ~ .slide-arr-n2, #s3:checked ~ .slide-arr-n3, #s4:checked ~ .slide-arr-n4, #s5:checked ~ .slide-arr-n5 { display: flex; }
     .hero-overlay {
       position: absolute; inset: 0;
       background: rgba(194, 75, 75, 0.65);
@@ -104,13 +111,30 @@
   </header>
 
   <div class="hero">
-    <div class="hero-slide" style="background-image:url('../images/cancun.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=1400&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1400&q=80')"></div>
-    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1400&q=80')"></div>
+    <input type="radio" name="slides" id="s1" class="slide-radio" checked>
+    <input type="radio" name="slides" id="s2" class="slide-radio">
+    <input type="radio" name="slides" id="s3" class="slide-radio">
+    <input type="radio" name="slides" id="s4" class="slide-radio">
+    <input type="radio" name="slides" id="s5" class="slide-radio">
+    <div class="hero-slides">
+      <div class="hero-slide" style="background-image:url('../images/cancun.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=1400&q=80')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=80')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1400&q=80')"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1400&q=80')"></div>
+    </div>
     <div class="hero-overlay"></div>
     <div class="hero-gradient"></div>
+    <label for="s5" class="slide-arr slide-arr-prev slide-arr-p1">&#8249;</label>
+    <label for="s1" class="slide-arr slide-arr-prev slide-arr-p2">&#8249;</label>
+    <label for="s2" class="slide-arr slide-arr-prev slide-arr-p3">&#8249;</label>
+    <label for="s3" class="slide-arr slide-arr-prev slide-arr-p4">&#8249;</label>
+    <label for="s4" class="slide-arr slide-arr-prev slide-arr-p5">&#8249;</label>
+    <label for="s2" class="slide-arr slide-arr-next slide-arr-n1">&#8250;</label>
+    <label for="s3" class="slide-arr slide-arr-next slide-arr-n2">&#8250;</label>
+    <label for="s4" class="slide-arr slide-arr-next slide-arr-n3">&#8250;</label>
+    <label for="s5" class="slide-arr slide-arr-next slide-arr-n4">&#8250;</label>
+    <label for="s1" class="slide-arr slide-arr-next slide-arr-n5">&#8250;</label>
     <div class="hero-text">
       <div class="dest-label">Senior Trip 2026 — Destination Guide</div>
       <h2>Cancun</h2>
