@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Cottagecore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Lato', sans-serif; font-weight: 300; background: #f7f2ea; color: #3d3428; }
+    header { text-align: center; padding: 64px 20px 48px; }
+    .back { display: inline-block; color: #a87c5a; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px; }
+    header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 600; color: #4a3728; letter-spacing: -0.5px; line-height: 1.1; }
+    header h1 em { font-style: italic; color: #7a6550; }
+    header p { margin-top: 12px; color: #9a8070; font-size: 0.9rem; letter-spacing: 1px; }
+    .divider { text-align: center; font-size: 1.5rem; margin: 8px 0 40px; color: #c4a882; letter-spacing: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+    .card { background: #fffcf5; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 16px rgba(100,70,40,0.1); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #e8dcc8; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(100,70,40,0.15); }
+    .card-img { height: 190px; background-size: cover; background-position: center; position: relative; filter: saturate(0.85) brightness(0.95); }
+    .card-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(61,52,40,0.5) 0%, transparent 60%); }
+    .card-img .floral { position: absolute; top: 10px; right: 14px; font-size: 1.5rem; z-index: 2; }
+    .card-img .location { position: absolute; bottom: 14px; left: 16px; z-index: 2; color: #f7f2ea; font-size: 0.75rem; letter-spacing: 2px; }
+    .card-body { padding: 22px; }
+    .card-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: #3d2e1e; margin-bottom: 6px; line-height: 1; }
+    .card-body .tagline { font-style: italic; color: #8a7060; font-size: 0.9rem; margin-bottom: 14px; font-family: 'Cormorant Garamond', serif; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; letter-spacing: 1px; font-weight: 400; }
+    .tag-beach { background: #d4edf4; color: #2a6e8a; }
+    .tag-nightlife { background: #ead4f0; color: #6a2a8a; }
+    .tag-culture { background: #f0e4d4; color: #8a5a2a; }
+    .tag-resort { background: #d4f0da; color: #2a7a40; }
+    .tag-food { background: #f0d4d4; color: #8a2a2a; }
+    .info-row { display: flex; gap: 10px; margin-bottom: 14px; }
+    .info-pill { flex: 1; background: #f2ece0; border-radius: 6px; padding: 8px 12px; text-align: center; }
+    .info-pill .lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: #b09070; margin-bottom: 2px; }
+    .info-pill .val { font-size: 0.82rem; color: #4a3728; font-weight: 400; }
+    .activities h3 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: #7a6050; margin-bottom: 8px; font-style: italic; }
+    .activities ul { list-style: none; }
+    .activities li { font-size: 0.82rem; color: #6a5848; padding: 4px 0; border-bottom: 1px solid #ede5d8; }
+    .activities li:last-child { border-bottom: none; }
+    footer { text-align: center; padding: 32px; color: #b09070; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; }
+    footer a { color: #a87c5a; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back">← All Vibes</a>
+    <h1>Senior Trip <em>2026</em></h1>
+    <p>Six dreamy destinations for the graduating class</p>
+  </header>
+  <div class="divider">✦ ✦ ✦</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cancun.jpg')">
+        <span class="floral">🌺</span>
+        <span class="location">Mexico</span>
+      </div>
+      <div class="card-body">
+        <h2>Cancun</h2>
+        <p class="tagline">"Where the sea glitters like scattered jewels"</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$900–$1,400</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 3hrs · No visa</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>🌊 Swim in the Cenotes</li><li>🏛 Chichen Itza day trip</li><li>🤿 Reef snorkeling</li><li>🌅 Tulum ruins + beach</li><li>🎉 Hotel Zone nightlife</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/miami.jpg')">
+        <span class="floral">🌸</span>
+        <span class="location">Florida, USA</span>
+      </div>
+      <div class="card-body">
+        <h2>Miami</h2>
+        <p class="tagline">"Pastel evenings on the Art Deco shore"</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$600–$1,000</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 2.5hrs · Domestic</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>🏖 South Beach strolls</li><li>🎨 Wynwood Walls</li><li>🌿 Everglades airboat</li><li>🥘 Little Havana food tour</li><li>🎶 Ocean Drive evenings</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/barcelona.jpg')">
+        <span class="floral">🌿</span>
+        <span class="location">Spain</span>
+      </div>
+      <div class="card-body">
+        <h2>Barcelona</h2>
+        <p class="tagline">"Stone cathedrals and the scent of the sea"</p>
+        <div class="tags"><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$1,800–$2,500</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 10hrs · No visa</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>⛪ La Sagrada Família</li><li>🏘 Gothic Quarter wander</li><li>🏖 Barceloneta Beach</li><li>🛍 La Boqueria market</li><li>🕺 Port Olímpic nights</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cabo.jpg')">
+        <span class="floral">🌵</span>
+        <span class="location">Mexico</span>
+      </div>
+      <div class="card-body">
+        <h2>Cabo San Lucas</h2>
+        <p class="tagline">"Desert wildflowers meet turquoise tides"</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-resort">Resort</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$1,000–$1,600</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 3.5hrs · No visa</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>🏔 El Arco boat tour</li><li>🏖 Medano Beach</li><li>🏍 Desert ATV</li><li>🐬 Dolphin cruise</li><li>🎉 Cabo Wabo nights</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/new-orleans.jpg')">
+        <span class="floral">🌷</span>
+        <span class="location">Louisiana, USA</span>
+      </div>
+      <div class="card-body">
+        <h2>New Orleans</h2>
+        <p class="tagline">"Where every street corner sings"</p>
+        <div class="tags"><span class="tag tag-food">Food</span><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$500–$900</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 2hrs · Domestic</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>🎺 Jazz on Frenchmen St</li><li>🍩 Beignets at Café Du Monde</li><li>🐊 Bayou swamp tour</li><li>🏘 Garden District walk</li><li>🎉 Bourbon Street</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/punta-cana.jpg')">
+        <span class="floral">🌴</span>
+        <span class="location">Dominican Republic</span>
+      </div>
+      <div class="card-body">
+        <h2>Punta Cana</h2>
+        <p class="tagline">"Where the palms sway and time stands still"</p>
+        <div class="tags"><span class="tag tag-resort">Resort</span><span class="tag tag-beach">Beach</span></div>
+        <div class="info-row">
+          <div class="info-pill"><div class="lbl">Price</div><div class="val">$1,000–$1,500</div></div>
+          <div class="info-pill"><div class="lbl">Journey</div><div class="val">✈ 5hrs · Passport req.</div></div>
+        </div>
+        <div class="activities"><h3>Things to do</h3><ul>
+          <li>🏖 All-inclusive resort</li><li>⛵ Saona Island catamaran</li><li>🤿 Snorkeling excursion</li><li>🪂 Zip-lining adventure</li><li>🐴 Horseback on the beach</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <footer><a href="../index.html">← All Vibes</a> &nbsp;✦&nbsp; Class of 2026</footer>
+</body>
+</html>

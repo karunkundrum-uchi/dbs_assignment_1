@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SR.TRIP.2026 // CYBERPUNK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Share Tech Mono', monospace; background: #050510; color: #00f5ff; min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,245,255,0.02) 2px, rgba(0,245,255,0.02) 4px);
+    }
+    header { position: relative; z-index: 1; text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #00f5ff33; }
+    .back { display: inline-block; color: #ff2d78; text-decoration: none; font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 20px; }
+    .back:hover { text-shadow: 0 0 10px #ff2d78; }
+    header h1 {
+      font-family: 'Orbitron', monospace; font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 900;
+      color: #00f5ff; letter-spacing: 8px; text-transform: uppercase;
+      text-shadow: 0 0 20px #00f5ff, 0 0 40px #00f5ff66;
+    }
+    header h1 span { color: #ff2d78; text-shadow: 0 0 20px #ff2d78; }
+    header p { color: #00f5ff88; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-top: 10px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; max-width: 1200px; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1; }
+    .card {
+      background: #0a0a1a; border: 1px solid #00f5ff22;
+      position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00f5ff, transparent); }
+    .card:hover { border-color: #00f5ff; box-shadow: 0 0 20px #00f5ff33, inset 0 0 20px #00f5ff0a; }
+    .card-img {
+      height: 200px; background-size: cover; background-position: center;
+      position: relative; filter: saturate(0.3) brightness(0.7);
+    }
+    .card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,245,255,0.3) 0%, rgba(255,45,120,0.2) 100%);
+      mix-blend-mode: screen;
+    }
+    .card-img .corner-tag {
+      position: absolute; top: 0; left: 0; z-index: 2;
+      background: #ff2d78; color: #fff; font-size: 0.6rem; letter-spacing: 3px;
+      text-transform: uppercase; padding: 4px 10px;
+    }
+    .card-body { padding: 20px; }
+    .card-id { font-size: 0.6rem; color: #00f5ff44; letter-spacing: 3px; margin-bottom: 8px; }
+    .card h2 { font-family: 'Orbitron', monospace; font-size: 1.2rem; font-weight: 700; color: #00f5ff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 0 10px #00f5ff66; }
+    .card .sub { color: #ff2d78; font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 10px; }
+    .card .tagline { color: #00f5ff88; font-size: 0.8rem; line-height: 1.6; margin-bottom: 14px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; border: 1px solid; }
+    .tag-beach { color: #00f5ff; border-color: #00f5ff44; }
+    .tag-nightlife { color: #ff2d78; border-color: #ff2d7844; }
+    .tag-culture { color: #f7ff00; border-color: #f7ff0044; }
+    .tag-resort { color: #00ff88; border-color: #00ff8844; }
+    .tag-food { color: #ff8c00; border-color: #ff8c0044; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #00f5ff11; border: 1px solid #00f5ff22; margin-bottom: 14px; }
+    .info-cell { background: #0a0a1a; padding: 8px 12px; }
+    .info-cell .lbl { font-size: 0.55rem; letter-spacing: 3px; color: #00f5ff44; margin-bottom: 2px; }
+    .info-cell .val { font-size: 0.8rem; color: #00f5ff; }
+    .activities h3 { font-size: 0.6rem; letter-spacing: 3px; color: #ff2d78; margin-bottom: 8px; }
+    .activities ul { list-style: none; }
+    .activities li { font-size: 0.8rem; color: #00f5ff88; padding: 4px 0; border-bottom: 1px solid #00f5ff11; }
+    .activities li::before { content: '> '; color: #ff2d78; }
+    .activities li:last-child { border-bottom: none; }
+    footer { text-align: center; padding: 32px; border-top: 1px solid #00f5ff22; color: #00f5ff44; font-size: 0.7rem; letter-spacing: 3px; position: relative; z-index: 1; }
+    footer a { color: #ff2d78; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back">&lt; BACK TO HUB</a>
+    <h1>SR.<span>TRIP</span>.2026</h1>
+    <p>// DESTINATION SELECTION PROTOCOL //</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cancun.jpg')"><span class="corner-tag">Beach</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::001 // MEX_CARIB</div>
+        <h2>Cancun</h2>
+        <div class="sub">// MEXICO // CARIBBEAN COAST</div>
+        <p class="tagline">Max party protocol engaged. Reef sector accessible.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$900–$1,400</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">3hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>Cenotes swim</li><li>Chichen Itza recon</li><li>Reef snorkel dive</li><li>Tulum ruins tour</li><li>Hotel Zone extraction</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/miami.jpg')"><span class="corner-tag">Domestic</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::002 // USA_FL</div>
+        <h2>Miami</h2>
+        <div class="sub">// FLORIDA // DOMESTIC SECTOR</div>
+        <p class="tagline">No passport clearance needed. High energy zone.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$600–$1,000</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">2.5hr / Domestic</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>South Beach deploy</li><li>Wynwood art scan</li><li>Everglades recon</li><li>Little Havana food run</li><li>Ocean Drive operation</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/barcelona.jpg')"><span class="corner-tag">Europe</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::003 // ESP_CAT</div>
+        <h2>Barcelona</h2>
+        <div class="sub">// SPAIN // EUROPEAN GRID</div>
+        <p class="tagline">Architecture data rich. Club sector runs 24hr cycle.</p>
+        <div class="tags"><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$1,800–$2,500</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">10hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>Sagrada Família uplink</li><li>Gothic Quarter traverse</li><li>Barceloneta beach zone</li><li>La Boqueria data collection</li><li>Port Olímpic night ops</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cabo.jpg')"><span class="corner-tag">Resort</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::004 // MEX_BAJA</div>
+        <h2>Cabo San Lucas</h2>
+        <div class="sub">// MEXICO // BAJA SECTOR</div>
+        <p class="tagline">Desert-ocean interface. High visual signature.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-resort">Resort</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$1,000–$1,600</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">3.5hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>El Arco maritime recon</li><li>Medano Beach deploy</li><li>Desert ATV operation</li><li>Dolphin fleet intercept</li><li>Cabo Wabo extraction</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/new-orleans.jpg')"><span class="corner-tag">Domestic</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::005 // USA_LA</div>
+        <h2>New Orleans</h2>
+        <div class="sub">// LOUISIANA // DOMESTIC SECTOR</div>
+        <p class="tagline">Cultural density: maximum. Jazz signal: always on.</p>
+        <div class="tags"><span class="tag tag-food">Food</span><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$500–$900</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">2hr / Domestic</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>Frenchmen St audio ops</li><li>Café Du Monde refuel</li><li>Bayou swamp scan</li><li>Garden District survey</li><li>Bourbon St night run</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/punta-cana.jpg')"><span class="corner-tag">All-Inclusive</span></div>
+      <div class="card-body">
+        <div class="card-id">DEST::006 // DOM_EAST</div>
+        <h2>Punta Cana</h2>
+        <div class="sub">// DOMINICAN REP. // CARIBBEAN NODE</div>
+        <p class="tagline">All-inclusive protocol. Passport clearance required.</p>
+        <div class="tags"><span class="tag tag-resort">Resort</span><span class="tag tag-beach">Beach</span></div>
+        <div class="info-grid">
+          <div class="info-cell"><div class="lbl">BUDGET</div><div class="val">$1,000–$1,500</div></div>
+          <div class="info-cell"><div class="lbl">TRANSIT</div><div class="val">5hr / Passport</div></div>
+        </div>
+        <div class="activities"><h3>// MISSION_OBJ</h3><ul>
+          <li>Resort infiltration</li><li>Saona Island extract</li><li>Reef snorkel dive</li><li>Canopy zip-line op</li><li>Equine beach patrol</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <footer><a href="../index.html">&lt; BACK_TO_HUB</a> // CLASS_OF_2026 // END_TRANSMISSION</footer>
+</body>
+</html>

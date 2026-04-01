@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — The Travel Gazette</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Source Serif 4', serif; background: #f2e8d9; color: #1a1008; }
+    .newspaper-header {
+      background: #f2e8d9; border-top: 6px solid #1a1008; border-bottom: 3px solid #1a1008;
+      text-align: center; padding: 24px;
+    }
+    .newspaper-header .top-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #5a4030; margin-bottom: 12px; border-bottom: 1px solid #5a4030; padding-bottom: 8px; }
+    .newspaper-header .back { color: #5a4030; text-decoration: none; }
+    .newspaper-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -1px; line-height: 1; }
+    .newspaper-header .subhead { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: #5a4030; margin-top: 8px; }
+    .newspaper-header .edition { font-size: 0.7rem; color: #888; margin-top: 4px; }
+    .section-rule { border: none; border-top: 3px double #1a1008; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 0; max-width: 1200px; margin: 0 auto; border-left: 1px solid #ccc; }
+    .card { padding: 28px 24px; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; }
+    .card-img {
+      width: 100%; height: 180px;
+      background-size: cover; background-position: center;
+      filter: grayscale(100%) sepia(30%) contrast(1.1);
+      margin-bottom: 14px;
+    }
+    .card-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 3px; color: #888; margin-bottom: 6px; border-top: 2px solid #1a1008; padding-top: 6px; display: inline-block; }
+    .card h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
+    .card .byline { font-size: 0.75rem; color: #888; font-style: italic; margin-bottom: 10px; }
+    .card .drop-cap::first-letter { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; float: left; line-height: 0.85; margin-right: 4px; margin-top: 4px; }
+    .card .tagline { font-size: 0.9rem; line-height: 1.6; color: #333; margin-bottom: 14px; }
+    .info-cols { display: flex; gap: 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 14px; }
+    .info-col { flex: 1; padding: 0 12px; border-right: 1px solid #ccc; }
+    .info-col:first-child { padding-left: 0; }
+    .info-col:last-child { border-right: none; }
+    .info-col .lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: #888; }
+    .info-col .val { font-size: 0.85rem; font-weight: 600; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; background: #1a1008; color: #f2e8d9; padding: 2px 8px; }
+    .activities h3 { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 700; font-style: italic; margin-bottom: 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    .activities ul { list-style: none; column-count: 1; }
+    .activities li { font-size: 0.82rem; padding: 3px 0; color: #444; }
+    footer { text-align: center; padding: 24px; border-top: 3px double #1a1008; background: #f2e8d9; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: #5a4030; }
+    footer a { color: #5a4030; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="newspaper-header">
+    <div class="top-bar">
+      <a href="../index.html" class="back">← All Vibes</a>
+      <span>Class of 2026 Travel Edition</span>
+      <span>Est. June 2026</span>
+    </div>
+    <h1>The Senior Gazette</h1>
+    <div class="subhead">Six Destinations for the Graduating Class</div>
+    <div class="edition">Special Commencement Issue &mdash; Summer 2026</div>
+  </div>
+  <hr class="section-rule">
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cancun.jpg')"></div>
+      <span class="card-label">Mexico &mdash; Caribbean Coast</span>
+      <h2>Cancun</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">Sun, sand, and the wildest parties in all of Mexico await the graduating class.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$900–$1,400</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">3 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">None</div></div>
+      </div>
+      <div class="tags"><span class="tag">Beach</span><span class="tag">Nightlife</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>🌊 Cenotes swim</li><li>🏛 Chichen Itza day trip</li><li>🤿 Reef snorkeling</li><li>🌅 Tulum ruins</li><li>🎉 Hotel Zone nightlife</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/miami.jpg')"></div>
+      <span class="card-label">Florida, USA &mdash; Domestic</span>
+      <h2>Miami</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">No passport required. All the heat, glamour, and culture you could ask for.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$600–$1,000</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">2.5 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">Domestic</div></div>
+      </div>
+      <div class="tags"><span class="tag">Beach</span><span class="tag">Nightlife</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>🏖 South Beach</li><li>🎨 Wynwood Walls</li><li>🌿 Everglades</li><li>🥘 Little Havana</li><li>🎶 Ocean Drive clubs</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/barcelona.jpg')"></div>
+      <span class="card-label">Spain &mdash; Europe</span>
+      <h2>Barcelona</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">Gaudí cathedrals by morning, legendary clubs until dawn — Europe's finest city.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$1,800–$2,500</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">10 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">None</div></div>
+      </div>
+      <div class="tags"><span class="tag">Culture</span><span class="tag">Nightlife</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>⛪ Sagrada Família</li><li>🏘 Gothic Quarter</li><li>🏖 Barceloneta</li><li>🛍 La Boqueria</li><li>🕺 Port Olímpic</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cabo.jpg')"></div>
+      <span class="card-label">Mexico &mdash; Baja Peninsula</span>
+      <h2>Cabo San Lucas</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">Where the Sonoran Desert plunges dramatically into the Sea of Cortez.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$1,000–$1,600</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">3.5 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">None</div></div>
+      </div>
+      <div class="tags"><span class="tag">Beach</span><span class="tag">Resort</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>🏔 El Arco boat tour</li><li>🏖 Medano Beach</li><li>🏍 Desert ATV</li><li>🐬 Dolphin cruise</li><li>🎉 Cabo Wabo</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/new-orleans.jpg')"></div>
+      <span class="card-label">Louisiana, USA &mdash; Domestic</span>
+      <h2>New Orleans</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">America's most soulful city beckons with jazz, cuisine, and irresistible culture.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$500–$900</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">2 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">Domestic</div></div>
+      </div>
+      <div class="tags"><span class="tag">Food</span><span class="tag">Culture</span><span class="tag">Nightlife</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>🎺 Frenchmen St jazz</li><li>🍩 Café Du Monde</li><li>🐊 Bayou tour</li><li>🏘 Garden District</li><li>🎉 Bourbon Street</li>
+      </ul></div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/punta-cana.jpg')"></div>
+      <span class="card-label">Dominican Republic &mdash; Caribbean</span>
+      <h2>Punta Cana</h2>
+      <div class="byline">By Our Correspondents &mdash; Spring 2026</div>
+      <p class="tagline drop-cap">All-inclusive paradise on the eastern tip of Hispaniola. Passport required.</p>
+      <div class="info-cols">
+        <div class="info-col"><div class="lbl">Cost</div><div class="val">$1,000–$1,500</div></div>
+        <div class="info-col"><div class="lbl">Flight</div><div class="val">5 hrs</div></div>
+        <div class="info-col"><div class="lbl">Visa</div><div class="val">Passport req.</div></div>
+      </div>
+      <div class="tags"><span class="tag">Resort</span><span class="tag">Beach</span></div>
+      <div class="activities"><h3>Recommended Excursions</h3><ul>
+        <li>🏖 All-inclusive resort</li><li>⛵ Saona Island</li><li>🤿 Snorkeling</li><li>🪂 Zip-lining</li><li>🐴 Horseback beach</li>
+      </ul></div>
+    </div>
+  </div>
+  <footer><a href="../index.html">← All Vibes</a> &mdash; The Senior Gazette, Class of 2026</footer>
+</body>
+</html>

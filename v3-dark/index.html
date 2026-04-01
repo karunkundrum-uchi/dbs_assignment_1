@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Dark Nightlife</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #080810; color: #fff; min-height: 100vh; }
+    header { text-align: center; padding: 60px 20px; }
+    header .back { display: inline-block; color: #ff79c6; text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+    header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 7rem); letter-spacing: 6px; text-transform: uppercase;
+      background: linear-gradient(90deg, #ff79c6, #bd93f9, #8be9fd);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    header p { color: #6272a4; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+    .card {
+      background: #0d0d1a;
+      border: 1px solid #222;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: #ff79c6; box-shadow: 0 0 30px rgba(255, 121, 198, 0.15); }
+    .card-img {
+      height: 220px;
+      background-size: cover; background-position: center;
+      position: relative;
+    }
+    .card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, #0d0d1a 0%, rgba(13,13,26,0.3) 60%, transparent 100%);
+    }
+    .card-img .glow-tag {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      background: rgba(255,121,198,0.15); border: 1px solid #ff79c6;
+      color: #ff79c6; padding: 4px 10px; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    }
+    .card-body { padding: 20px; }
+    .card-body h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 3px; color: #f8f8f2; margin-bottom: 2px; }
+    .card-body .sub { color: #6272a4; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+    .card-body .tagline { color: #ccc; font-size: 0.9rem; margin-bottom: 16px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tag { padding: 3px 10px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; border: 1px solid; }
+    .tag-beach { color: #8be9fd; border-color: #8be9fd; }
+    .tag-nightlife { color: #ff79c6; border-color: #ff79c6; }
+    .tag-culture { color: #ffb86c; border-color: #ffb86c; }
+    .tag-resort { color: #50fa7b; border-color: #50fa7b; }
+    .tag-food { color: #f1fa8c; border-color: #f1fa8c; }
+    .info-row { display: flex; gap: 12px; margin-bottom: 16px; }
+    .info-box { flex: 1; padding: 10px 12px; border: 1px solid #222; }
+    .info-box .lbl { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #6272a4; margin-bottom: 4px; }
+    .info-box .val { font-size: 0.85rem; font-weight: 600; color: #f8f8f2; }
+    .activities h3 { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #bd93f9; margin-bottom: 8px; }
+    .activities ul { list-style: none; }
+    .activities li { font-size: 0.85rem; color: #aaa; padding: 5px 0; border-bottom: 1px solid #1a1a2e; }
+    .activities li:last-child { border-bottom: none; }
+    footer { text-align: center; padding: 40px; color: #44475a; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+    footer a { color: #bd93f9; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back">← All Vibes</a>
+    <h1>Senior Trip 2026</h1>
+    <p>Where will the night take you?</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cancun.jpg')">
+        <span class="glow-tag">Beach</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Mexico</div>
+        <h2>Cancun</h2>
+        <p class="tagline">Sun burns all day. Party burns all night.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$900–$1,400</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">3hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>🌊 Cenotes swim</li><li>🏛 Chichen Itza</li><li>🤿 Reef snorkeling</li><li>🌅 Tulum ruins</li><li>🎉 Hotel Zone nightlife</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/miami.jpg')">
+        <span class="glow-tag">Domestic</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Florida, USA</div>
+        <h2>Miami</h2>
+        <p class="tagline">No passport. All the heat.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$600–$1,000</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">2.5hr / Domestic</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>🏖 South Beach</li><li>🎨 Wynwood Walls</li><li>🌿 Everglades</li><li>🥘 Little Havana</li><li>🎶 Ocean Drive</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/barcelona.jpg')">
+        <span class="glow-tag">Europe</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Spain</div>
+        <h2>Barcelona</h2>
+        <p class="tagline">Cathedrals at noon. Clubs until 6am.</p>
+        <div class="tags"><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$1,800–$2,500</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">10hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>⛪ Sagrada Família</li><li>🏘 Gothic Quarter</li><li>🏖 Barceloneta</li><li>🛍 La Boqueria</li><li>🕺 Port Olímpic clubs</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cabo.jpg')">
+        <span class="glow-tag">Resort</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Mexico</div>
+        <h2>Cabo San Lucas</h2>
+        <p class="tagline">Tequila sunrises. Tequila sunsets.</p>
+        <div class="tags"><span class="tag tag-beach">Beach</span><span class="tag tag-resort">Resort</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$1,000–$1,600</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">3.5hr / No visa</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>🏔 El Arco tour</li><li>🏖 Medano Beach</li><li>🏍 Desert ATV</li><li>🐬 Dolphin cruise</li><li>🎉 Cabo Wabo</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/new-orleans.jpg')">
+        <span class="glow-tag">Domestic</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Louisiana, USA</div>
+        <h2>New Orleans</h2>
+        <p class="tagline">The city that never stops the music.</p>
+        <div class="tags"><span class="tag tag-food">Food</span><span class="tag tag-culture">Culture</span><span class="tag tag-nightlife">Nightlife</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$500–$900</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">2hr / Domestic</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>🎺 Frenchmen St jazz</li><li>🍩 Café Du Monde</li><li>🐊 Bayou tour</li><li>🏘 Garden District</li><li>🎉 Bourbon Street</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/punta-cana.jpg')">
+        <span class="glow-tag">All-Inclusive</span>
+      </div>
+      <div class="card-body">
+        <div class="sub">Dominican Republic</div>
+        <h2>Punta Cana</h2>
+        <p class="tagline">Bottomless drinks. Endless ocean.</p>
+        <div class="tags"><span class="tag tag-resort">Resort</span><span class="tag tag-beach">Beach</span></div>
+        <div class="info-row">
+          <div class="info-box"><div class="lbl">Cost</div><div class="val">$1,000–$1,500</div></div>
+          <div class="info-box"><div class="lbl">Flight</div><div class="val">5hr / Passport req.</div></div>
+        </div>
+        <div class="activities"><h3>Activities</h3><ul>
+          <li>🏖 All-inclusive resort</li><li>⛵ Saona Island</li><li>🤿 Snorkeling</li><li>🪂 Zip-lining</li><li>🐴 Horseback beach</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <footer><a href="../index.html">← All Vibes</a> &nbsp;|&nbsp; Class of 2026</footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENIOR TRIP 2026 — SPORTS HYPE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Barlow Condensed', sans-serif; background: #0a0a0a; color: #fff; }
+    header {
+      background: #e31212; clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+      padding: 50px 24px 80px; text-align: center; position: relative;
+    }
+    .back { display: inline-block; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+    .back:hover { color: #fff; }
+    header h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 700; text-transform: uppercase; letter-spacing: 4px; line-height: 1; text-shadow: 4px 4px 0 rgba(0,0,0,0.3); }
+    header p { font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; opacity: 0.8; margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3px; max-width: 1200px; margin: -30px auto 0; padding: 0 20px 60px; }
+    .card { background: #111; position: relative; overflow: hidden; transition: transform 0.2s; }
+    .card:hover { transform: scale(1.02); z-index: 2; }
+    .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%); transition: left 0.5s; }
+    .card:hover::before { left: 150%; }
+    .card-img { height: 200px; background-size: cover; background-position: center; position: relative; clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
+    .card-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(227,18,18,0.4), rgba(0,0,0,0.6)); }
+    .card-img .num { position: absolute; bottom: 16px; left: 16px; z-index: 2; font-family: 'Oswald', sans-serif; font-size: 4rem; font-weight: 700; color: rgba(255,255,255,0.15); line-height: 1; }
+    .card-img .flag { position: absolute; top: 12px; right: 12px; z-index: 2; background: #e31212; color: #fff; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; font-weight: 700; }
+    .card-body { padding: 16px 20px 20px; }
+    .card-body h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; line-height: 1; margin-bottom: 2px; }
+    .card-body .country { font-size: 0.75rem; color: #e31212; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+    .card-body .tagline { font-size: 0.95rem; color: #aaa; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #222; margin-bottom: 12px; }
+    .stat { background: #1a1a1a; padding: 10px 8px; text-align: center; }
+    .stat .lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; color: #555; margin-bottom: 2px; }
+    .stat .val { font-size: 0.85rem; font-weight: 700; color: #fff; }
+    .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; font-weight: 700; background: #1a1a1a; color: #e31212; border-left: 3px solid #e31212; }
+    .activities h3 { font-size: 0.65rem; letter-spacing: 3px; color: #e31212; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+    .activities ul { list-style: none; }
+    .activities li { font-size: 0.85rem; color: #ccc; padding: 4px 0; border-bottom: 1px solid #1a1a1a; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.78rem; }
+    .activities li::before { content: '▸ '; color: #e31212; }
+    .activities li:last-child { border-bottom: none; }
+    footer { text-align: center; padding: 32px; background: #e31212; color: rgba(255,255,255,0.7); font-family: 'Oswald', sans-serif; letter-spacing: 3px; text-transform: uppercase; }
+    footer a { color: #fff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back">← All Vibes</a>
+    <h1>Senior Trip<br>2026</h1>
+    <p>Pick your destination. Pack your bags.</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cancun.jpg')">
+        <span class="num">01</span>
+        <span class="flag">MX</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Mexico</div>
+        <h2>Cancun</h2>
+        <div class="tagline">Beach. Party. Repeat.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">3HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">NONE</div></div>
+        </div>
+        <div class="tags"><span class="tag">Beach</span><span class="tag">Nightlife</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>Cenotes swim</li><li>Chichen Itza</li><li>Reef snorkeling</li><li>Tulum ruins</li><li>Hotel Zone nightlife</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/miami.jpg')">
+        <span class="num">02</span>
+        <span class="flag">US</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Florida, USA</div>
+        <h2>Miami</h2>
+        <div class="tagline">Domestic. No excuses.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">2.5HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">DOM.</div></div>
+        </div>
+        <div class="tags"><span class="tag">Beach</span><span class="tag">Nightlife</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>South Beach</li><li>Wynwood Walls</li><li>Everglades</li><li>Little Havana</li><li>Ocean Drive clubs</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/barcelona.jpg')">
+        <span class="num">03</span>
+        <span class="flag">ES</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Spain</div>
+        <h2>Barcelona</h2>
+        <div class="tagline">Europe's big game.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$$$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">10HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">NONE</div></div>
+        </div>
+        <div class="tags"><span class="tag">Culture</span><span class="tag">Nightlife</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>Sagrada Família</li><li>Gothic Quarter</li><li>Barceloneta Beach</li><li>La Boqueria</li><li>Port Olímpic clubs</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/cabo.jpg')">
+        <span class="num">04</span>
+        <span class="flag">MX</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Mexico</div>
+        <h2>Cabo</h2>
+        <div class="tagline">Resort mode activated.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">3.5HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">NONE</div></div>
+        </div>
+        <div class="tags"><span class="tag">Beach</span><span class="tag">Resort</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>El Arco boat tour</li><li>Medano Beach</li><li>Desert ATV</li><li>Dolphin cruise</li><li>Cabo Wabo</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/new-orleans.jpg')">
+        <span class="num">05</span>
+        <span class="flag">US</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Louisiana, USA</div>
+        <h2>New Orleans</h2>
+        <div class="tagline">Full cultural experience.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">2HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">DOM.</div></div>
+        </div>
+        <div class="tags"><span class="tag">Food</span><span class="tag">Culture</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>Frenchmen St jazz</li><li>Café Du Monde</li><li>Bayou swamp tour</li><li>Garden District</li><li>Bourbon Street</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background-image:url('../images/punta-cana.jpg')">
+        <span class="num">06</span>
+        <span class="flag">DO</span>
+      </div>
+      <div class="card-body">
+        <div class="country">Dominican Republic</div>
+        <h2>Punta Cana</h2>
+        <div class="tagline">All-inclusive. All out.</div>
+        <div class="stats">
+          <div class="stat"><div class="lbl">Cost</div><div class="val">$$</div></div>
+          <div class="stat"><div class="lbl">Flight</div><div class="val">5HR</div></div>
+          <div class="stat"><div class="lbl">Visa</div><div class="val">PASS.</div></div>
+        </div>
+        <div class="tags"><span class="tag">Resort</span><span class="tag">Beach</span></div>
+        <div class="activities"><h3>Plays</h3><ul>
+          <li>All-inclusive resort</li><li>Saona Island</li><li>Snorkeling</li><li>Zip-lining</li><li>Horseback beach</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <footer><a href="../index.html">← All Vibes</a> &nbsp;|&nbsp; Class of 2026</footer>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senior Trip 2026 — Pick Your Vibe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f0f1a;
+      color: #fff;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+    }
+    a.vibe-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    a.vibe-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .vibe-card .card-inner {
+      padding: 32px 24px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .vibe-card .num {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+    .vibe-card .name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .vibe-card .desc {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    /* Individual vibe card colors */
+    .v1  { background: linear-gradient(135deg, #f7971e, #ffd200, #21d4fd); }
+    .v2  { background: linear-gradient(135deg, #c94b4b, #4b134f); color: #ffe082; }
+    .v3  { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+    .v4  { background: #f5f5f5; color: #111; }
+    .v5  { background: linear-gradient(135deg, #c9a84c, #8b6914); color: #1a0a00; }
+    .v6  { background: linear-gradient(135deg, #0d0d0d, #0a3d62); }
+    .v7  { background: linear-gradient(135deg, #a8edea, #fed6e3, #d7fcda); color: #3a3a3a; }
+    .v8  { background: linear-gradient(135deg, #1a1a1a, #c0392b); }
+    .v9  { background: linear-gradient(135deg, #1a1a1a, #3d3d3d); }
+    .v10 { background: linear-gradient(135deg, #00f260, #0575e6, #f7971e); }
+
+    .v3 .name, .v6 .name, .v8 .name, .v9 .name { color: #fff; }
+    .v9 .name { color: #d4af37; }
+    .v9 .num, .v9 .desc { color: #aaa; }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #555;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Senior Trip 2026</h1>
+    <p>Six destinations. Ten vibes. One trip. Pick your aesthetic.</p>
+  </header>
+
+  <div class="grid">
+    <a href="v1-tropical/index.html" class="vibe-card v1">
+      <div class="card-inner">
+        <div class="num">Version 01</div>
+        <div class="name">Tropical Summer</div>
+        <div class="desc">Bright, beachy, and full of life</div>
+      </div>
+    </a>
+    <a href="v2-retro/index.html" class="vibe-card v2">
+      <div class="card-inner">
+        <div class="num">Version 02</div>
+        <div class="name">Retro Travel Poster</div>
+        <div class="desc">Vintage 1960s airline aesthetic</div>
+      </div>
+    </a>
+    <a href="v3-dark/index.html" class="vibe-card v3">
+      <div class="card-inner">
+        <div class="num">Version 03</div>
+        <div class="name">Dark Nightlife</div>
+        <div class="desc">Neon glow, club energy, late nights</div>
+      </div>
+    </a>
+    <a href="v4-minimal/index.html" class="vibe-card v4">
+      <div class="card-inner">
+        <div class="num">Version 04</div>
+        <div class="name">Ultra Minimal</div>
+        <div class="desc">Clean, quiet, nothing extra</div>
+      </div>
+    </a>
+    <a href="v5-newspaper/index.html" class="vibe-card v5">
+      <div class="card-inner">
+        <div class="num">Version 05</div>
+        <div class="name">Old Newspaper</div>
+        <div class="desc">Sepia tones, editorial, classy</div>
+      </div>
+    </a>
+    <a href="v6-cyberpunk/index.html" class="vibe-card v6">
+      <div class="card-inner">
+        <div class="num">Version 06</div>
+        <div class="name">Cyberpunk</div>
+        <div class="desc">Neon cyan, glitch effects, the future</div>
+      </div>
+    </a>
+    <a href="v7-cottagecore/index.html" class="vibe-card v7">
+      <div class="card-inner">
+        <div class="num">Version 07</div>
+        <div class="name">Cottagecore</div>
+        <div class="desc">Soft, dreamy, and wildly aesthetic</div>
+      </div>
+    </a>
+    <a href="v8-sports/index.html" class="vibe-card v8">
+      <div class="card-inner">
+        <div class="num">Version 08</div>
+        <div class="name">Sports Hype</div>
+        <div class="desc">Bold, loud, and absolutely unhinged</div>
+      </div>
+    </a>
+    <a href="v9-luxury/index.html" class="vibe-card v9">
+      <div class="card-inner">
+        <div class="num">Version 09</div>
+        <div class="name">Luxury Magazine</div>
+        <div class="desc">Black, gold, Condé Nast energy</div>
+      </div>
+    </a>
+    <a href="v10-y2k/index.html" class="vibe-card v10">
+      <div class="card-inner">
+        <div class="num">Version 10</div>
+        <div class="name">Y2K / 90s Internet</div>
+        <div class="desc">Maximum chaos. Maximum fun. ✨</div>
+      </div>
+    </a>
+  </div>
+
+  <footer>Class of 2026 &mdash; Where are we going?</footer>
+</body>
+</html>
